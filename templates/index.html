@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+<title>Reward Ads — سجّل دخولك</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Cairo',sans-serif;background:#0a0e1a;color:#f1f5f9;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;}
+.wrap{width:100%;max-width:400px;}
+.logo{text-align:center;margin-bottom:24px;}
+.logo-icon{font-size:52px;}
+.logo h1{font-size:26px;font-weight:900;color:#f59e0b;margin-top:8px;}
+.logo p{color:#64748b;font-size:13px;margin-top:4px;}
+.card{background:#111827;border:1px solid #1e293b;border-radius:20px;padding:24px;}
+/* Tabs */
+.tabs{display:flex;background:#1a2235;border-radius:10px;padding:3px;margin-bottom:20px;gap:3px;}
+.tab{flex:1;padding:9px;border:none;background:transparent;color:#64748b;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;border-radius:8px;transition:.2s;}
+.tab.active{background:#f59e0b;color:#000;}
+/* Form */
+label{display:block;font-size:12px;color:#64748b;margin-bottom:5px;}
+input{width:100%;background:#1a2235;border:1px solid #1e293b;border-radius:10px;padding:12px 13px;color:#f1f5f9;font-family:inherit;font-size:14px;margin-bottom:12px;outline:none;transition:.2s;}
+input:focus{border-color:#f59e0b;}
+.btn{width:100%;padding:13px;border:none;border-radius:11px;background:linear-gradient(135deg,#f59e0b,#d97706);color:#000;font-family:inherit;font-size:15px;font-weight:900;cursor:pointer;margin-top:4px;transition:.2s;}
+.btn:hover{opacity:.9;}
+.btn:disabled{opacity:.5;cursor:not-allowed;}
+/* Telegram btn */
+.tg-btn{width:100%;padding:14px;border:none;border-radius:11px;background:linear-gradient(135deg,#0088cc,#006699);color:#fff;font-family:inherit;font-size:15px;font-weight:900;cursor:pointer;margin-bottom:12px;}
+.or{text-align:center;color:#64748b;font-size:12px;margin:8px 0;}
+/* Error */
+.err{color:#ef4444;font-size:13px;padding:8px 12px;background:rgba(239,68,68,.1);border-radius:8px;margin-top:10px;display:none;}
+/* Features */
+.feats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px;}
+.feat{background:#111827;border:1px solid #1e293b;border-radius:11px;padding:12px;text-align:center;}
+.feat-i{font-size:20px;}
+.feat-t{font-size:11px;color:#94a3b8;margin-top:4px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="logo">
+    <div class="logo-icon">⚡</div>
+    <h1>Reward Ads</h1>
+    <p>اكسب أموالاً حقيقية من مشاهدة الإعلانات</p>
+  </div>
+
+  <div class="card">
+    <!-- زر تيليجرام -->
+    <button class="tg-btn" id="tg-btn" onclick="loginTelegram()">✈️ دخول بحساب تيليجرام</button>
+    <div class="or">— أو سجّل بحساب عادي —</div>
+
+    <!-- تبويبات -->
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab('login', this)">دخول</button>
+      <button class="tab"        onclick="switchTab('reg',   this)">حساب جديد</button>
+    </div>
+
+    <!-- فورم الدخول -->
+    <div id="tab-login">
+      <label>اسم المستخدم</label>
+      <input id="l-user" type="text"     placeholder="أدخل اسم المستخدم" autocomplete="username">
+      <label>كلمة المرور</label>
+      <input id="l-pass" type="password" placeholder="أدخل كلمة المرور" autocomplete="current-password">
+      <button class="btn" id="l-btn" onclick="doLogin()">دخول</button>
+      <div class="err" id="l-err"></div>
+    </div>
+
+    <!-- فورم التسجيل -->
+    <div id="tab-reg" style="display:none">
+      <label>اسم المستخدم</label>
+      <input id="r-user"  type="text"     placeholder="اختر اسم مستخدم"   autocomplete="username">
+      <label>كلمة المرور (6 أحرف على الأقل)</label>
+      <input id="r-pass"  type="password" placeholder="اختر كلمة مرور"    autocomplete="new-password">
+      <button class="btn" id="r-btn" onclick="doRegister()">إنشاء حساب</button>
+      <div class="err" id="r-err"></div>
+    </div>
+  </div>
+
+  <div class="feats">
+    <div class="feat"><div class="feat-i">📺</div><div class="feat-t">شاهد إعلانات واكسب</div></div>
+    <div class="feat"><div class="feat-i">👥</div><div class="feat-t">عمولة إحالة 5%</div></div>
+    <div class="feat"><div class="feat-i">💳</div><div class="feat-t">سحب فوري</div></div>
+    <div class="feat"><div class="feat-i">📱</div><div class="feat-t">يعمل على كل الأجهزة</div></div>
+  </div>
+</div>
+
+<script>
+const tg  = window.Telegram?.WebApp;
+const ref = new URLSearchParams(location.search).get('ref') || '';
+
+// لو في توكن محفوظ روح للداشبورد مباشرة
+if(localStorage.getItem('rw_token')) location.replace('/dashboard');
+
+// لو فُتح من تيليجرام — دخول تلقائي
+if(tg?.initDataUnsafe?.user){ tg.expand(); loginTelegram(); }
+
+// ── API ────────────────────────────────────────────────────────────────
+async function post(url, body){
+  const r = await fetch(url, {
+    method: 'POST',
+    headers: {'Content-Type':'application/json', 'ngrok-skip-browser-warning':'true'},
+    body: JSON.stringify(body)
+  });
+  return r.json();
+}
+
+function save(data){
+  localStorage.setItem('rw_token',    data.token);
+  localStorage.setItem('rw_user',     JSON.stringify(data.user));
+  localStorage.setItem('rw_settings', JSON.stringify(data.settings || {}));
+  location.replace('/dashboard');
+}
+
+// ── تيليجرام ──────────────────────────────────────────────────────────
+async function loginTelegram(){
+  const tgUser = tg?.initDataUnsafe?.user;
+  if(!tgUser){ showErr('l-err','افتح التطبيق من داخل تيليجرام'); return; }
+  document.getElementById('tg-btn').textContent = '⏳ جارٍ الدخول...';
+  document.getElementById('tg-btn').disabled    = true;
+  const d = await post('/api/tg_auth', {
+    telegram_id: String(tgUser.id),
+    first_name:  tgUser.first_name || '',
+    username:    tgUser.username   || '',
+    init_data:   tg.initData       || '',
+    ref
+  });
+  if(d.success) save(d);
+  else {
+    document.getElementById('tg-btn').textContent = '✈️ دخول بحساب تيليجرام';
+    document.getElementById('tg-btn').disabled    = false;
+    showErr('l-err', d.error || 'حدث خطأ');
+  }
+}
+
+// ── دخول عادي ─────────────────────────────────────────────────────────
+async function doLogin(){
+  const btn  = document.getElementById('l-btn');
+  const user = document.getElementById('l-user').value.trim();
+  const pass = document.getElementById('l-pass').value;
+  if(!user || !pass){ showErr('l-err','أدخل البيانات'); return; }
+  btn.disabled = true; btn.textContent = 'جارٍ الدخول...';
+  const d = await post('/api/login', {username: user, password: pass});
+  if(d.success) save(d);
+  else { showErr('l-err', d.error || 'خطأ'); btn.disabled=false; btn.textContent='دخول'; }
+}
+
+// ── تسجيل ─────────────────────────────────────────────────────────────
+async function doRegister(){
+  const btn  = document.getElementById('r-btn');
+  const user = document.getElementById('r-user').value.trim();
+  const pass = document.getElementById('r-pass').value;
+  if(!user || !pass){ showErr('r-err','أدخل البيانات'); return; }
+  if(pass.length < 6){ showErr('r-err','كلمة المرور 6 أحرف على الأقل'); return; }
+  btn.disabled = true; btn.textContent = 'جارٍ الإنشاء...';
+  const d = await post('/api/register', {username: user, password: pass, ref});
+  if(d.success) save(d);
+  else { showErr('r-err', d.error || 'خطأ'); btn.disabled=false; btn.textContent='إنشاء حساب'; }
+}
+
+// ── مساعدات ───────────────────────────────────────────────────────────
+function switchTab(name, el){
+  document.getElementById('tab-login').style.display = name==='login' ? 'block' : 'none';
+  document.getElementById('tab-reg').style.display   = name==='reg'   ? 'block' : 'none';
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+}
+function showErr(id, msg){
+  const e = document.getElementById(id);
+  e.textContent = msg; e.style.display = 'block';
+  setTimeout(() => e.style.display = 'none', 4000);
+}
+document.addEventListener('keydown', e => {
+  if(e.key !== 'Enter') return;
+  const isLogin = document.getElementById('tab-login').style.display !== 'none';
+  isLogin ? doLogin() : doRegister();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+<title>Reward Ads</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
+:root{
+  --bg:#0a0e1a; --card:#111827; --card2:#1a2235;
+  --accent:#f59e0b; --green:#10b981; --blue:#3b82f6;
+  --red:#ef4444; --purple:#8b5cf6;
+  --text:#f1f5f9; --muted:#64748b; --border:#1e293b;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:70px;}
+
+/* ── شريط علوي ── */
+.topbar{background:var(--card);border-bottom:1px solid var(--border);padding:12px 16px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;}
+.brand{font-size:17px;font-weight:900;color:var(--accent);}
+.logout-btn{background:transparent;border:1px solid var(--border);color:var(--muted);padding:5px 12px;border-radius:8px;cursor:pointer;font-family:inherit;font-size:12px;}
+
+/* ── تنقل سفلي ── */
+.botnav{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--border);display:flex;z-index:100;}
+.nb{flex:1;padding:8px 2px;border:none;background:transparent;color:var(--muted);font-family:inherit;font-size:9px;font-weight:700;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:.15s;}
+.nb.active{color:var(--accent);}
+.nb-i{font-size:18px;}
+
+/* ── صفحات ── */
+.page{display:none;padding:14px;}
+.page.active{display:block;}
+
+/* ── بطاقة الرصيد ── */
+.hero{background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);border-radius:18px;padding:22px 16px;text-align:center;margin-bottom:14px;border:1px solid rgba(245,158,11,.2);}
+.hero-lbl{font-size:11px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;}
+.hero-amt{font-size:44px;font-weight:900;color:var(--accent);line-height:1;font-variant-numeric:tabular-nums;}
+.hero-unit{font-size:14px;color:var(--muted);}
+.hero-sub{font-size:12px;color:var(--muted);margin-top:6px;}
+
+/* ── زر مشاهدة الإعلان ── */
+.watch-btn{width:100%;padding:16px;border:none;border-radius:14px;background:linear-gradient(135deg,var(--accent),#d97706);color:#000;font-family:inherit;font-size:16px;font-weight:900;cursor:pointer;margin-bottom:14px;box-shadow:0 4px 20px rgba(245,158,11,.35);transition:.15s;}
+.watch-btn:active{transform:scale(.97);}
+.watch-btn:disabled{background:#374151;color:var(--muted);box-shadow:none;cursor:not-allowed;}
+.watch-sub{font-size:12px;font-weight:500;opacity:.8;margin-top:3px;}
+
+/* ── إحصائيات ── */
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+.stat{background:var(--card);border-radius:13px;padding:14px;text-align:center;border:1px solid var(--border);}
+.stat-i{font-size:22px;margin-bottom:5px;}
+.stat-v{font-size:20px;font-weight:900;color:var(--green);}
+.stat-l{font-size:11px;color:var(--muted);}
+
+/* ── بطاقات عامة ── */
+.card{background:var(--card);border-radius:14px;padding:16px;margin-bottom:14px;border:1px solid var(--border);}
+.card h3{font-size:13px;margin-bottom:10px;}
+.ref-box{display:flex;gap:8px;align-items:center;background:var(--card2);border-radius:9px;padding:9px 12px;}
+.ref-link{flex:1;font-size:11px;color:var(--blue);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.copy-btn{background:var(--blue);color:#fff;border:none;border-radius:7px;padding:7px 12px;font-family:inherit;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;}
+
+/* ── بوتات الربح ── */
+.bot-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:12px;}
+.bot-top{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
+.bot-icon{width:44px;height:44px;background:linear-gradient(135deg,var(--purple),#5b21b6);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.bot-title{font-size:15px;font-weight:800;}
+.bot-msg{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:12px;white-space:pre-wrap;}
+.bot-btn{display:block;width:100%;padding:11px;border:none;border-radius:10px;background:linear-gradient(135deg,#0088cc,#006699);color:#fff;font-family:inherit;font-size:14px;font-weight:800;cursor:pointer;text-align:center;text-decoration:none;}
+
+/* ── السحب ── */
+.sec-title{font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;}
+.wgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;}
+.wopt{border:2px solid var(--border);border-radius:11px;padding:10px 6px;text-align:center;cursor:pointer;background:var(--card2);transition:.15s;}
+.wopt.sel{border-color:var(--accent);background:rgba(245,158,11,.1);}
+.wi{font-size:20px;margin-bottom:3px;}
+.wn{font-size:11px;font-weight:700;}
+label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px;}
+input{width:100%;background:var(--card2);border:1px solid var(--border);border-radius:9px;padding:11px 12px;color:var(--text);font-family:inherit;font-size:14px;margin-bottom:12px;outline:none;transition:.2s;}
+input:focus{border-color:var(--accent);}
+.sbtn{width:100%;padding:13px;border:none;border-radius:11px;background:linear-gradient(135deg,var(--green),#059669);color:#fff;font-family:inherit;font-size:15px;font-weight:800;cursor:pointer;}
+
+/* ── صندوق العمولة ── */
+.comm-box{background:var(--card2);border-radius:10px;padding:12px 14px;margin-bottom:12px;}
+.cr{display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px;}
+.cr.total{border-top:1px solid var(--border);padding-top:8px;margin-top:5px;font-weight:800;margin-bottom:0;}
+
+/* ── سجل العمليات ── */
+.tx-list{display:flex;flex-direction:column;gap:8px;}
+.tx{background:var(--card);border-radius:11px;padding:11px 14px;display:flex;justify-content:space-between;align-items:center;border:1px solid var(--border);}
+.tx-l{display:flex;align-items:center;gap:9px;}
+.tx-d{font-size:13px;font-weight:600;}
+.tx-dt{font-size:11px;color:var(--muted);}
+.tx-a{font-size:14px;font-weight:800;font-variant-numeric:tabular-nums;}
+.pos{color:var(--green);}
+.neg{color:var(--red);}
+
+/* ── طلبات السحب ── */
+.badge{display:inline-block;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:700;}
+.badge.pending{background:rgba(245,158,11,.2);color:var(--accent);}
+.badge.approved{background:rgba(16,185,129,.2);color:var(--green);}
+.badge.rejected{background:rgba(239,68,68,.2);color:var(--red);}
+.witem{background:var(--card);border-radius:11px;padding:11px 14px;margin-bottom:8px;border:1px solid var(--border);}
+.wrow{display:flex;justify-content:space-between;align-items:center;}
+
+/* ── إشعار ── */
+.toast{position:fixed;bottom:82px;left:50%;transform:translateX(-50%) translateY(16px);background:var(--card);border:1px solid var(--border);border-radius:11px;padding:11px 18px;font-size:13px;font-weight:600;z-index:999;opacity:0;transition:.25s;pointer-events:none;white-space:nowrap;max-width:90vw;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+.toast.success{border-color:var(--green);color:var(--green);}
+.toast.error{border-color:var(--red);color:var(--red);}
+
+/* ── Spinner ── */
+.spin{display:inline-block;width:15px;height:15px;border:2px solid rgba(0,0,0,.3);border-top-color:#000;border-radius:50%;animation:sp .6s linear infinite;vertical-align:middle;}
+@keyframes sp{to{transform:rotate(360deg);}}
+
+.empty{text-align:center;padding:24px;color:var(--muted);font-size:13px;}
+</style>
+</head>
+<body>
+
+<!-- ── شريط علوي ── -->
+<div class="topbar">
+  <div class="brand">⚡ Reward Ads</div>
+  <div style="display:flex;align-items:center;gap:8px">
+    <span style="font-size:12px;color:var(--muted)" id="top-user"></span>
+    <button class="logout-btn" onclick="logout()">خروج</button>
+  </div>
+</div>
+
+<!-- ══ الرئيسية ══ -->
+<div class="page active" id="page-home">
+  <div class="hero">
+    <div class="hero-lbl">رصيدك الحالي</div>
+    <div style="display:flex;align-items:baseline;justify-content:center;gap:5px">
+      <span class="hero-amt" id="balance">0.00000</span>
+      <span class="hero-unit">ج.م</span>
+    </div>
+    <div class="hero-sub" id="earned-sub">إجمالي المكتسب: 0.00000 ج.م</div>
+  </div>
+
+  <button class="watch-btn" id="watch-btn" onclick="watchAd()">
+    <div id="btn-text">📺 شاهد إعلان واكسب</div>
+    <div class="watch-sub" id="btn-sub">المكافأة: 0.50000 ج.م</div>
+  </button>
+
+  <div class="stats">
+    <div class="stat"><div class="stat-i">👥</div><div class="stat-v" id="rc">0</div><div class="stat-l">الإحالات</div></div>
+    <div class="stat"><div class="stat-i">📺</div><div class="stat-v" id="ads-today">0/100</div><div class="stat-l">إعلانات اليوم</div></div>
+  </div>
+
+  <div class="card">
+    <h3>🔗 رابط الإحالة الخاص بك</h3>
+    <div class="ref-box">
+      <span class="ref-link" id="rl-home">جارٍ التحميل...</span>
+      <button class="copy-btn" onclick="copyRef()">نسخ</button>
+    </div>
+  </div>
+
+  <!-- إعلان بانر 320×50 -->
+  <div style="display:flex;justify-content:center;margin-top:6px">
+    <script>atOptions={'key':'6bde1dac07421fa08aec7f022b0e1dc6','format':'iframe','height':50,'width':320,'params':{}};</script>
+    <script src="https://disintegratehesitate.com/6bde1dac07421fa08aec7f022b0e1dc6/invoke.js"></script>
+  </div>
+</div>
+
+<!-- ══ الإحالات ══ -->
+<div class="page" id="page-ref">
+  <div class="hero" style="margin-bottom:14px">
+    <div class="hero-lbl">أشخاص دعوتهم</div>
+    <span class="hero-amt" id="rc2">0</span>
+    <div class="hero-sub">تحصل على 5% من كل مشاهدة يقومون بها</div>
+  </div>
+  <div class="card">
+    <h3>🔗 رابط الإحالة</h3>
+    <div class="ref-box">
+      <span class="ref-link" id="rl-ref">جارٍ التحميل...</span>
+      <button class="copy-btn" onclick="copyRef()">نسخ</button>
+    </div>
+  </div>
+  <div class="card">
+    <button class="sbtn" onclick="shareWhatsapp()" style="background:linear-gradient(135deg,#25d366,#128c7e)">📤 مشاركة عبر واتساب</button>
+  </div>
+  <div class="card" style="text-align:center;color:var(--muted);font-size:13px;line-height:2.2">
+    <div style="font-size:18px;margin-bottom:6px">💡 كيف يعمل؟</div>
+    <div>✅ شارك رابطك مع أصدقائك</div>
+    <div>✅ احصل على <strong style="color:var(--accent)">5%</strong> من كل إعلان يشاهده</div>
+    <div>✅ تُضاف العمولة تلقائياً لرصيدك</div>
+  </div>
+</div>
+
+<!-- ══ بوتات الربح ══ -->
+<div class="page" id="page-bots">
+  <div style="text-align:center;padding:16px 0 12px">
+    <div style="font-size:36px">🤖</div>
+    <div style="font-size:16px;font-weight:900;margin-top:6px">بوتات الربح المميزة</div>
+    <div style="font-size:12px;color:var(--muted);margin-top:4px">بوتات موثوقة للربح من الإنترنت</div>
+  </div>
+  <div id="bots-list"><div class="empty">⏳ جارٍ التحميل...</div></div>
+</div>
+
+<!-- ══ السحب ══ -->
+<div class="page" id="page-withdraw">
+  <div class="card">
+    <div class="sec-title">اختر طريقة الدفع</div>
+    <div class="wgrid">
+      <div class="wopt sel" onclick="selWallet('Vodafone Cash',this)"><div class="wi">🔴</div><div class="wn">Vodafone Cash</div></div>
+      <div class="wopt"     onclick="selWallet('Etisalat Cash',this)"><div class="wi">🟢</div><div class="wn">Etisalat Cash</div></div>
+      <div class="wopt"     onclick="selWallet('Orange Cash',  this)"><div class="wi">🟠</div><div class="wn">Orange Cash</div></div>
+      <div class="wopt"     onclick="selWallet('WE Pay',       this)"><div class="wi">🔵</div><div class="wn">WE Pay</div></div>
+    </div>
+
+    <label>رقم المحفظة</label>
+    <input type="tel"    id="w-number" placeholder="01xxxxxxxxx" maxlength="11">
+
+    <label>المبلغ المطلوب (ج.م)</label>
+    <input type="number" id="w-amount" placeholder="الحد الأدنى: 5 ج.م" min="1" step="0.00001" oninput="calcCommission()">
+
+    <!-- تفاصيل العمولة -->
+    <div class="comm-box">
+      <div class="cr"><span style="color:var(--muted)">المبلغ المطلوب:</span><span id="c-amount">0.00000 ج.م</span></div>
+      <div class="cr"><span style="color:var(--muted)">عمولة الخدمة:</span><span style="color:var(--red)" id="c-comm">1.00000 ج.م</span></div>
+      <div class="cr total"><span>إجمالي الخصم من رصيدك:</span><span style="color:var(--accent)" id="c-total">0.00000 ج.م</span></div>
+    </div>
+
+    <div style="display:flex;justify-content:space-between;margin-bottom:12px">
+      <span style="font-size:12px;color:var(--muted)">رصيدك المتاح:</span>
+      <span style="font-size:14px;font-weight:800;color:var(--accent);font-variant-numeric:tabular-nums" id="avail">0.00000 ج.م</span>
+    </div>
+    <button class="sbtn" onclick="doWithdraw()">💸 طلب السحب</button>
+  </div>
+
+  <div class="sec-title">طلبات السحب السابقة</div>
+  <div id="w-hist"><div class="empty">لا توجد طلبات بعد</div></div>
+</div>
+
+<!-- ══ السجل ══ -->
+<div class="page" id="page-hist">
+  <div class="sec-title">سجل العمليات</div>
+  <div class="tx-list" id="tx-list"><div class="empty">لا توجد عمليات بعد</div></div>
+</div>
+
+<!-- ── تنقل سفلي ── -->
+<nav class="botnav">
+  <button class="nb active" onclick="goPage('home')"     id="nav-home">    <span class="nb-i">🏠</span>الرئيسية</button>
+  <button class="nb"        onclick="goPage('ref')"      id="nav-ref">     <span class="nb-i">👥</span>الإحالات</button>
+  <button class="nb"        onclick="goPage('bots')"     id="nav-bots">    <span class="nb-i">🤖</span>بوتات</button>
+  <button class="nb"        onclick="goPage('withdraw')" id="nav-withdraw"><span class="nb-i">💳</span>السحب</button>
+  <button class="nb"        onclick="goPage('hist')"     id="nav-hist">    <span class="nb-i">📜</span>السجل</button>
+</nav>
+
+<div class="toast" id="toast"></div>
+
+<!-- إعلان Popunder — يشتغل تلقائياً -->
+<script src="https://disintegratehesitate.com/26/08/43/2608430f6fb6781f93db67b04459bcb2.js"></script>
+
+<!-- إعلان Native Banner -->
+<script async="async" data-cfasync="false" src="https://disintegratehesitate.com/f1b90449f5dbd9c738e78f55f4242b36/invoke.js"></script>
+<div id="container-f1b90449f5dbd9c738e78f55f4242b36"></div>
+
+<script>
+// ── التحقق من التوكن ──────────────────────────────────────────────────
+const TOKEN = localStorage.getItem('rw_token');
+if(!TOKEN) location.replace('/');
+
+// ── الحالة ────────────────────────────────────────────────────────────
+let user     = JSON.parse(localStorage.getItem('rw_user')     || '{}');
+let sett     = JSON.parse(localStorage.getItem('rw_settings') || '{}');
+let wallet   = 'Vodafone Cash';
+let cdTimer  = null;   // عداد الانتظار بين الإعلانات
+let adTimer  = null;   // عداد مشاهدة الإعلان
+
+// ── API ────────────────────────────────────────────────────────────────
+async function api(url, body = null){
+  try{
+    const r = await fetch(url, {
+      method:  body !== null ? 'POST' : 'GET',
+      headers: {
+        'Content-Type':              'application/json',
+        'X-Auth-Token':              TOKEN,
+        'ngrok-skip-browser-warning':'true'
+      },
+      body: body !== null ? JSON.stringify(body) : null
+    });
+    if(r.status === 401){ logout(); return {}; }
+    return await r.json();
+  } catch(e){
+    return { error: 'خطأ في الاتصال بالسيرفر' };
+  }
+}
+
+// ── رابط الإحالة ──────────────────────────────────────────────────────
+// ملاحظة للمبرمج: غيّر @medo_add_bot باسم البوت الفعلي
+function buildRefLink(){
+  return 'https://t.me/medo_add_bot?start=ref_' + (user.user_id || '');
+}
+
+// ── تنسيق الأرقام بدقة 5 خانات عشرية ────────────────────────────────
+function fmt(n){ return parseFloat(n || 0).toFixed(5); }
+
+// ══ التهيئة ══════════════════════════════════════════════════════════
+(async () => {
+  // اعرض البيانات المحفوظة فوراً بدون انتظار
+  renderUI();
+  // استكمل عداد لو كان شغال قبل ما يطلع
+  resumeAdIfNeeded();
+  // حدّث من السيرفر في الخلفية
+  const d = await api('/api/me');
+  if(!d.success) return;
+  user = d.user;
+  sett = d.settings;
+  localStorage.setItem('rw_user',     JSON.stringify(user));
+  localStorage.setItem('rw_settings', JSON.stringify(sett));
+  renderUI();
+  // ضبط حالة زر الإعلان
+  const cd = d.ad_status?.remaining_cooldown || 0;
+  if(cd > 0) showCooldown(cd);
+  else        setBtnReady();
+})();
+
+// ── رسم الواجهة ───────────────────────────────────────────────────────
+function renderUI(){
+  const name = user.first_name || user.username || '';
+  document.getElementById('top-user').textContent    = name ? 'مرحباً ' + name : '';
+  document.getElementById('balance').textContent     = fmt(user.balance);
+  document.getElementById('earned-sub').textContent  = 'إجمالي المكتسب: ' + fmt(user.total_earned) + ' ج.م';
+  document.getElementById('rc').textContent          = user.referral_count || 0;
+  document.getElementById('rc2').textContent         = user.referral_count || 0;
+  document.getElementById('avail').textContent       = fmt(user.balance) + ' ج.م';
+  const max   = sett.max_ads_per_day || 100;
+  const today = user.ads_today || 0;
+  document.getElementById('ads-today').textContent   = today + '/' + max;
+  // تحديث placeholder خانة المبلغ
+  const wamt = document.getElementById('w-amount');
+  if(wamt){
+    const minW = sett.min_withdraw || 5;
+    wamt.placeholder = 'الحد الأدنى: ' + fmt(minW) + ' ج.م';
+    wamt.min = minW;
+  }
+  // رابط الإحالة
+  const link = buildRefLink();
+  document.getElementById('rl-home').textContent = link;
+  document.getElementById('rl-ref').textContent  = link;
+  calcCommission();
+}
+
+// ── ضبط زر الإعلان ────────────────────────────────────────────────────
+function setBtnReady(){
+  const btn = document.getElementById('watch-btn');
+  const max   = sett.max_ads_per_day || 100;
+  const today = user.ads_today || 0;
+  if(today >= max){
+    btn.disabled = true;
+    document.getElementById('btn-text').textContent = '🚫 وصلت للحد اليومي';
+    document.getElementById('btn-sub').textContent  = today + '/' + max + ' إعلان اليوم';
+    return;
+  }
+  btn.disabled = false;
+  document.getElementById('btn-text').textContent = '📺 شاهد إعلان واكسب';
+  document.getElementById('btn-sub').textContent  = 'المكافأة: ' + fmt(sett.reward_per_ad || 0.5) + ' ج.م — ' + today + '/' + max;
+}
+
+// ── عداد الانتظار بين الإعلانات ───────────────────────────────────────
+function showCooldown(seconds){
+  clearInterval(cdTimer);
+  const btn = document.getElementById('watch-btn');
+  btn.disabled = true;
+  let sec = Math.ceil(seconds);
+  const tick = () => {
+    if(sec <= 0){ clearInterval(cdTimer); setBtnReady(); return; }
+    document.getElementById('btn-text').textContent = '⏳ انتظر قبل الإعلان التالي';
+    document.getElementById('btn-sub').textContent  = sec + ' ثانية';
+    sec--;
+  };
+  tick();
+  cdTimer = setInterval(tick, 1000);
+}
+
+// ── استئناف عداد الإعلان لو المستخدم طلع وراجع ───────────────────────
+function resumeAdIfNeeded(){
+  const startTime = parseInt(localStorage.getItem('rw_ad_start')    || '0');
+  const duration  = parseInt(localStorage.getItem('rw_ad_duration') || '0');
+  const token     = localStorage.getItem('rw_ad_token');
+  if(!startTime || !duration || !token) return;
+
+  const elapsed   = (Date.now() - startTime) / 1000;
+  const remaining = duration - elapsed;
+
+  if(remaining > 0){
+    // لسه في وقت — اعرض العداد
+    const btn = document.getElementById('watch-btn');
+    btn.disabled = true;
+    let sec = Math.ceil(remaining);
+    clearInterval(adTimer);
+    const tick = () => {
+      if(sec <= 0){ clearInterval(adTimer); finishAd(token); return; }
+      document.getElementById('btn-text').innerHTML  = '<span class="spin"></span> جارٍ التحقق من الإعلان...';
+      document.getElementById('btn-sub').textContent = 'انتظر ' + sec + ' ثانية';
+      sec--;
+    };
+    tick();
+    adTimer = setInterval(tick, 1000);
+  } else {
+    // الوقت خلص وهو كان برّا — ابعت للسيرفر مباشرة
+    finishAd(token);
+  }
+}
+
+// ══ مشاهدة الإعلان ════════════════════════════════════════════════════
+async function watchAd(){
+  const btn = document.getElementById('watch-btn');
+  if(btn.disabled) return;
+  btn.disabled = true;
+
+  // ① فتح الـ Smartlink فوراً مع الضغطة (بديل للـ Popunder لو اتحجب)
+  try{
+    window.open('https://disintegratehesitate.com/s58vcc7cx7?key=3c8038e179588ed760ea9e8e4266b927', '_blank');
+  } catch(e){}
+
+  document.getElementById('btn-text').textContent = '⏳ جارٍ تجهيز الإعلان...';
+  document.getElementById('btn-sub').textContent  = '';
+
+  // ② اطلب توكن الإعلان من السيرفر
+  const td = await api('/api/ad_token', {});
+  if(td.error){
+    showToast(td.error, 'error');
+    if(td.wait) showCooldown(td.wait);
+    else        setBtnReady();
+    return;
+  }
+
+  const token    = td.token;
+  const duration = td.duration || sett.cooldown_seconds || 20;
+
+  // ③ احفظ في localStorage عشان لو طلع يرجع يكمّل
+  localStorage.setItem('rw_ad_token',    token);
+  localStorage.setItem('rw_ad_start',    Date.now().toString());
+  localStorage.setItem('rw_ad_duration', duration.toString());
+
+  // ④ عداد العد التنازلي
+  let sec = duration;
+  clearInterval(adTimer);
+  const tick = () => {
+    if(sec <= 0){ clearInterval(adTimer); finishAd(token); return; }
+    document.getElementById('btn-text').innerHTML  = '<span class="spin"></span> جارٍ التحقق من الإعلان...';
+    document.getElementById('btn-sub').textContent = 'انتظر ' + sec + ' ثانية';
+    sec--;
+  };
+  tick();
+  adTimer = setInterval(tick, 1000);
+}
+
+// ── إنهاء الإعلان وإرسال المكافأة ─────────────────────────────────────
+async function finishAd(token){
+  clearInterval(adTimer);
+  document.getElementById('btn-text').textContent = '⏳ جارٍ إضافة المكافأة...';
+  document.getElementById('btn-sub').textContent  = '';
+
+  const d = await api('/api/watch_ad', { token });
+
+  // امسح البيانات المؤقتة دايماً
+  localStorage.removeItem('rw_ad_token');
+  localStorage.removeItem('rw_ad_start');
+  localStorage.removeItem('rw_ad_duration');
+
+  if(d.success){
+    user.balance      = d.new_balance;
+    user.total_earned = (user.total_earned || 0) + d.reward;
+    user.ads_today    = d.ads_today;
+    localStorage.setItem('rw_user', JSON.stringify(user));
+    renderUI();
+    showToast('✅ تمت إضافة ' + fmt(d.reward) + ' ج.م لرصيدك!', 'success');
+    showCooldown(sett.cooldown_seconds || 20);
+  } else {
+    showToast(d.error || 'حدث خطأ', 'error');
+    setBtnReady();
+  }
+}
+
+// ══ التنقل بين الصفحات ════════════════════════════════════════════════
+function goPage(name){
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nb').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  document.getElementById('nav-'  + name).classList.add('active');
+  if(name === 'hist')     loadTransactions();
+  if(name === 'withdraw') loadWithdrawals();
+  if(name === 'bots')     loadBots();
+}
+
+// ══ بوتات الربح ═══════════════════════════════════════════════════════
+async function loadBots(){
+  const el = document.getElementById('bots-list');
+  el.innerHTML = '<div class="empty">⏳ جارٍ التحميل...</div>';
+  const d = await api('/api/featured_bots');
+  if(!d.bots?.length){
+    el.innerHTML = '<div class="empty">🤖 لا توجد بوتات مميزة حالياً</div>';
+    return;
+  }
+  el.innerHTML = d.bots.map(b => `
+    <div class="bot-card">
+      <div class="bot-top">
+        <div class="bot-icon">🤖</div>
+        <div class="bot-title">${b.title}</div>
+      </div>
+      <div class="bot-msg">${b.message}</div>
+      <a class="bot-btn" href="${b.bot_link}" target="_blank">✈️ فتح البوت</a>
+    </div>`).join('');
+}
+
+// ══ السحب ═════════════════════════════════════════════════════════════
+function selWallet(name, el){
+  wallet = name;
+  document.querySelectorAll('.wopt').forEach(e => e.classList.remove('sel'));
+  el.classList.add('sel');
+}
+
+function calcCommission(){
+  const amount = parseFloat(document.getElementById('w-amount')?.value || 0) || 0;
+  const comm   = parseFloat(sett.withdrawal_commission || 1);
+  document.getElementById('c-amount').textContent = fmt(amount) + ' ج.م';
+  document.getElementById('c-comm').textContent   = fmt(comm)   + ' ج.م';
+  document.getElementById('c-total').textContent  = fmt(amount + comm) + ' ج.م';
+}
+
+async function doWithdraw(){
+  const number = document.getElementById('w-number').value.trim();
+  const amount = parseFloat(document.getElementById('w-amount').value);
+  const comm   = parseFloat(sett.withdrawal_commission || 1);
+  const minW   = parseFloat(sett.min_withdraw || 5);
+
+  if(!number || number.length < 10){ showToast('أدخل رقم محفظة صحيح', 'error'); return; }
+  if(!amount || amount < minW)       { showToast('الحد الأدنى ' + fmt(minW) + ' ج.م', 'error'); return; }
+  if((amount + comm) > (user.balance || 0)){
+    showToast('رصيد غير كافٍ (المبلغ + عمولة ' + fmt(comm) + ' ج.م)', 'error'); return;
+  }
+
+  const d = await api('/api/withdraw', { amount, wallet_type: wallet, wallet_number: number });
+  if(d.success){
+    user.balance = Math.max(0, (user.balance || 0) - (amount + comm));
+    localStorage.setItem('rw_user', JSON.stringify(user));
+    renderUI();
+    document.getElementById('w-number').value = '';
+    document.getElementById('w-amount').value = '';
+    calcCommission();
+    showToast('✅ تم إرسال طلب السحب بنجاح', 'success');
+    loadWithdrawals();
+  } else {
+    showToast(d.error || 'حدث خطأ', 'error');
+  }
+}
+
+async function loadWithdrawals(){
+  const d  = await api('/api/my_withdrawals', {});
+  const el = document.getElementById('w-hist');
+  if(!d.withdrawals?.length){ el.innerHTML = '<div class="empty">لا توجد طلبات بعد</div>'; return; }
+  el.innerHTML = d.withdrawals.map(w => `
+    <div class="witem">
+      <div class="wrow">
+        <strong>${w.wallet_type} — ${fmt(w.amount)} ج.م</strong>
+        <span class="badge ${w.status}">${statusLabel(w.status)}</span>
+      </div>
+      <div style="font-size:11px;color:var(--muted);margin-top:4px">${w.wallet_number} · ${w.date}</div>
+    </div>`).join('');
+}
+
+async function loadTransactions(){
+  const d  = await api('/api/transactions', {});
+  const el = document.getElementById('tx-list');
+  if(!d.transactions?.length){ el.innerHTML = '<div class="empty">لا توجد عمليات بعد</div>'; return; }
+  el.innerHTML = d.transactions.map(t => `
+    <div class="tx">
+      <div class="tx-l">
+        <span style="font-size:19px">${t.icon}</span>
+        <div>
+          <div class="tx-d">${t.description}</div>
+          <div class="tx-dt">${t.date}</div>
+        </div>
+      </div>
+      <span class="tx-a ${t.amount >= 0 ? 'pos' : 'neg'}">${t.amount >= 0 ? '+' : ''}${fmt(t.amount)}</span>
+    </div>`).join('');
+}
+
+// ══ مساعدات ═══════════════════════════════════════════════════════════
+function copyRef(){
+  navigator.clipboard?.writeText(buildRefLink())
+    .then(() => showToast('✅ تم نسخ رابط الإحالة', 'success'));
+}
+function shareWhatsapp(){
+  window.open('https://wa.me/?text=' + encodeURIComponent('انضم وشاهد إعلانات واكسب مكافآت فورية! ' + buildRefLink()));
+}
+function statusLabel(s){
+  return { pending: '⏳ معلق', approved: '✅ مقبول', rejected: '❌ مرفوض' }[s] || s;
+}
+function showToast(msg, type = 'success'){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className   = 'toast ' + type + ' show';
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+function logout(){
+  localStorage.clear();
+  location.replace('/');
+}
+</script>
+</body>
+</html>
