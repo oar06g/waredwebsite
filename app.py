@@ -4,7 +4,8 @@ Flask + Supabase (بدون SQLAlchemy)
 PORT: 5000
 """
 import sys, os, uuid, secrets, time, json, hmac, hashlib
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'shared'))
+# sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'shared'))
+
 
 from flask import Flask, request, jsonify, render_template
 from dotenv import load_dotenv
