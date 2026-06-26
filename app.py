@@ -4,8 +4,7 @@ Flask + Supabase (بدون SQLAlchemy)
 PORT: 5000
 """
 import sys, os, uuid, secrets, time, json, hmac, hashlib
-# sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'shared'))
-
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'shared'))
 
 from flask import Flask, request, jsonify, render_template
 from dotenv import load_dotenv
@@ -22,11 +21,17 @@ from db import (
 
 load_dotenv()
 
+# ── تسجيل البوت (Webhook) ─────────────────────────────────────────────────────
+from bot_simple import register_bot
+
 # ── إعداد التطبيق ─────────────────────────────────────────────────────────────
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('WEBSITE_SECRET_KEY', 'change_me')
 BOT_TOKEN   = os.environ.get('BOT_TOKEN',   '')
 BOT_USERNAME = os.environ.get('BOT_USERNAME', 'medo_add_bot')
+
+# ── تفعيل الـ Webhook ────────────────────────────────────────────────────────────
+register_bot(app)
 
 # ── توكنز الجلسات (RAM) ───────────────────────────────────────────────────────
 # ملاحظة للمبرمج: في الإنتاج استبدلها بـ Redis
@@ -302,6 +307,11 @@ def watch_ad():
     if ads_today >= max_ads:
         return jsonify({'error': 'وصلت للحد اليومي!'}), 429
 
+    # تحقق من captcha
+    captcha_every = settings.get('captcha_every', 10)
+    ads_since_cap = int(user.get('ads_since_captcha') or 0)
+    need_captcha  = (ads_since_cap > 0 and ads_since_cap % captcha_every == 0)
+
     # إضافة المكافأة
     reward    = float(settings['reward_per_ad'])
     new_bal   = float(user.get('balance') or 0) + reward
@@ -331,12 +341,36 @@ def watch_ad():
             create_transaction(referrer_id, 'referral_commission', commission,
                                f'عمولة 5% من {user.get("username", uid)}')
 
+    # زيادة عداد الـ captcha
+    from db import increment_ads_since_captcha, reset_captcha_count
+    new_cap = increment_ads_since_captcha(uid)
+    next_captcha = captcha_every - (new_cap % captcha_every)
+
     return jsonify({
-        'success':     True,
-        'reward':      reward,
-        'new_balance': new_bal,
-        'ads_today':   new_today
+        'success':       True,
+        'reward':        reward,
+        'new_balance':   new_bal,
+        'ads_today':     new_today,
+        'need_captcha':  need_captcha,
+        'next_captcha':  next_captcha
     })
+
+# ══════════════════════════════════════════════════════════════════════════════
+# API — التحقق البشري (Captcha)
+# ══════════════════════════════════════════════════════════════════════════════
+
+@app.route('/api/verify_captcha', methods=['POST'])
+def verify_captcha():
+    user = current_user()
+    if not user:
+        return jsonify({'error': 'غير مسجل'}), 401
+    answer   = str((request.json or {}).get('answer', '')).strip()
+    expected = str((request.json or {}).get('expected', '')).strip()
+    if answer != expected:
+        return jsonify({'success': False, 'error': 'إجابة خاطئة، حاول مرة أخرى'})
+    from db import reset_captcha_count
+    reset_captcha_count(user['user_id'])
+    return jsonify({'success': True})
 
 # ══════════════════════════════════════════════════════════════════════════════
 # API — السحب
@@ -354,16 +388,30 @@ def withdraw():
     wallet_type   = d.get('wallet_type',   '')
     wallet_number = d.get('wallet_number', '')
 
-    settings   = get_settings()
-    min_w      = float(settings['min_withdraw'])
-    commission = float(settings['withdrawal_commission'])
+    settings = get_settings()
+    balance  = float(user.get('balance') or 0)
+
+    # خريطة طرق السحب → مفاتيح الإعدادات
+    wallet_keys = {
+        'Vodafone Cash':  ('min_vodafone',  'fee_vodafone'),
+        'Etisalat Cash':  ('min_etisalat',  'fee_etisalat'),
+        'Orange Cash':    ('min_orange',    'fee_orange'),
+        'WE Pay':         ('min_we',        'fee_we'),
+        'Binance':        ('min_binance',   'fee_binance'),
+        'Ethereum ERC20': ('min_ethereum',  'fee_ethereum'),
+    }
+    # USDT — كل شبكاته بنفس الحدود والرسوم
+    if wallet_type.startswith('USDT'):
+        wallet_keys[wallet_type] = ('min_usdt', 'fee_usdt')
+    min_key, fee_key = wallet_keys.get(wallet_type, ('min_withdraw', 'withdrawal_commission'))
+    min_w      = float(settings.get(min_key, settings.get('min_withdraw', 5)))
+    commission = float(settings.get(fee_key, settings.get('withdrawal_commission', 1)))
     total      = amount + commission
-    balance    = float(user.get('balance') or 0)
 
     if amount < min_w:
-        return jsonify({'error': f'الحد الأدنى {min_w} ج.م'}), 400
+        return jsonify({'error': f'الحد الأدنى لـ {wallet_type} هو {min_w} ج.م'}), 400
     if balance < total:
-        return jsonify({'error': f'رصيد غير كافٍ (المبلغ + عمولة {commission} ج.م)'}), 400
+        return jsonify({'error': f'رصيد غير كافٍ (المبلغ + رسوم {commission} ج.م)'}), 400
 
     # خصم من الرصيد
     update_user(uid, balance=round(balance - total, 10))
@@ -398,6 +446,26 @@ def transactions():
 # ══════════════════════════════════════════════════════════════════════════════
 # API — البوتات المميزة
 # ══════════════════════════════════════════════════════════════════════════════
+
+@app.route('/api/usdt_networks')
+def usdt_networks():
+    """إرجاع شبكات USDT المفعّلة"""
+    s = get_settings()
+    nets = [n.strip() for n in s.get('active_usdt_nets','TRC20').split(',') if n.strip()]
+    return jsonify({
+        'networks': nets,
+        'default':  nets[0] if nets else 'TRC20'
+    })
+
+@app.route('/api/site_config')
+def site_config():
+    """إعدادات الموقع العامة — ثيم + رسالة ترحيب"""
+    s = get_settings()
+    return jsonify({
+        'active_theme':   s.get('active_theme',   'dark_gold'),
+        'welcome_active': s.get('welcome_active', False),
+        'welcome_message':s.get('welcome_message',''),
+    })
 
 @app.route('/api/featured_bots')
 def featured_bots():

@@ -5,43 +5,65 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
 <title>Reward Ads</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
-:root{
+<style id="theme-style">
+/* ── الثيمات ── */
+:root {
   --bg:#0a0e1a; --card:#111827; --card2:#1a2235;
   --accent:#f59e0b; --green:#10b981; --blue:#3b82f6;
   --red:#ef4444; --purple:#8b5cf6;
   --text:#f1f5f9; --muted:#64748b; --border:#1e293b;
 }
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:70px;}
+/* THEME: ocean_blue */
+.theme-ocean_blue {
+  --bg:#020617; --card:#0f172a; --card2:#1e3a5f;
+  --accent:#38bdf8; --green:#34d399; --blue:#818cf8;
+  --text:#e0f2fe; --muted:#64748b; --border:#1e3a5f;
+}
+/* THEME: emerald */
+.theme-emerald {
+  --bg:#022c22; --card:#064e3b; --card2:#065f46;
+  --accent:#34d399; --green:#a7f3d0; --blue:#6ee7b7;
+  --text:#ecfdf5; --muted:#6b7280; --border:#065f46;
+}
+/* THEME: purple_night */
+.theme-purple_night {
+  --bg:#0f0520; --card:#1e0a3c; --card2:#2d1458;
+  --accent:#a855f7; --green:#34d399; --blue:#818cf8;
+  --text:#f5f3ff; --muted:#7c3aed; --border:#2d1458;
+}
+/* THEME: light */
+.theme-light {
+  --bg:#f8fafc; --card:#ffffff; --card2:#f1f5f9;
+  --accent:#f59e0b; --green:#10b981; --blue:#3b82f6;
+  --red:#ef4444; --purple:#8b5cf6;
+  --text:#1e293b; --muted:#64748b; --border:#e2e8f0;
+}
 
-/* ── شريط علوي ── */
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:70px;transition:background .3s;}
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
+
 .topbar{background:var(--card);border-bottom:1px solid var(--border);padding:12px 16px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;}
 .brand{font-size:17px;font-weight:900;color:var(--accent);}
 .logout-btn{background:transparent;border:1px solid var(--border);color:var(--muted);padding:5px 12px;border-radius:8px;cursor:pointer;font-family:inherit;font-size:12px;}
-
-/* ── تنقل سفلي ── */
 .botnav{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--border);display:flex;z-index:100;}
-.nb{flex:1;padding:8px 2px;border:none;background:transparent;color:var(--muted);font-family:inherit;font-size:9px;font-weight:700;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:.15s;}
+.nb{flex:1;padding:8px 2px;border:none;background:transparent;color:var(--muted);font-family:inherit;font-size:9px;font-weight:700;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;}
 .nb.active{color:var(--accent);}
 .nb-i{font-size:18px;}
-
-/* ── صفحات ── */
 .page{display:none;padding:14px;}
 .page.active{display:block;}
 
-/* ── بطاقة الرصيد ── */
-.hero{background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);border-radius:18px;padding:22px 16px;text-align:center;margin-bottom:14px;border:1px solid rgba(245,158,11,.2);}
+/* ── HERO ── */
+.hero{background:linear-gradient(135deg,var(--card),var(--card2));border-radius:18px;padding:22px 16px;text-align:center;margin-bottom:14px;border:1px solid var(--border);}
 .hero-lbl{font-size:11px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;}
 .hero-amt{font-size:44px;font-weight:900;color:var(--accent);line-height:1;font-variant-numeric:tabular-nums;}
 .hero-unit{font-size:14px;color:var(--muted);}
 .hero-sub{font-size:12px;color:var(--muted);margin-top:6px;}
 
-/* ── زر مشاهدة الإعلان ── */
-.watch-btn{width:100%;padding:16px;border:none;border-radius:14px;background:linear-gradient(135deg,var(--accent),#d97706);color:#000;font-family:inherit;font-size:16px;font-weight:900;cursor:pointer;margin-bottom:14px;box-shadow:0 4px 20px rgba(245,158,11,.35);transition:.15s;}
+/* ── زر الإعلان ── */
+.watch-btn{width:100%;padding:16px;border:none;border-radius:14px;background:linear-gradient(135deg,var(--accent),#d97706);color:#000;font-family:inherit;font-size:16px;font-weight:900;cursor:pointer;margin-bottom:14px;box-shadow:0 4px 20px rgba(245,158,11,.3);transition:.15s;}
 .watch-btn:active{transform:scale(.97);}
-.watch-btn:disabled{background:#374151;color:var(--muted);box-shadow:none;cursor:not-allowed;}
+.watch-btn:disabled{background:var(--card2);color:var(--muted);box-shadow:none;cursor:not-allowed;}
 .watch-sub{font-size:12px;font-weight:500;opacity:.8;margin-top:3px;}
 
 /* ── إحصائيات ── */
@@ -51,7 +73,7 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-h
 .stat-v{font-size:20px;font-weight:900;color:var(--green);}
 .stat-l{font-size:11px;color:var(--muted);}
 
-/* ── بطاقات عامة ── */
+/* ── بطاقات ── */
 .card{background:var(--card);border-radius:14px;padding:16px;margin-bottom:14px;border:1px solid var(--border);}
 .card h3{font-size:13px;margin-bottom:10px;}
 .ref-box{display:flex;gap:8px;align-items:center;background:var(--card2);border-radius:9px;padding:9px 12px;}
@@ -68,14 +90,14 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-h
 
 /* ── السحب ── */
 .sec-title{font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;}
-.wgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;}
-.wopt{border:2px solid var(--border);border-radius:11px;padding:10px 6px;text-align:center;cursor:pointer;background:var(--card2);transition:.15s;}
+.wgrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px;}
+.wopt{border:2px solid var(--border);border-radius:11px;padding:10px 4px;text-align:center;cursor:pointer;background:var(--card2);transition:.15s;}
 .wopt.sel{border-color:var(--accent);background:rgba(245,158,11,.1);}
-.wi{font-size:20px;margin-bottom:3px;}
-.wn{font-size:11px;font-weight:700;}
+.wi{font-size:18px;margin-bottom:3px;}
+.wn{font-size:10px;font-weight:700;}
 label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px;}
-input{width:100%;background:var(--card2);border:1px solid var(--border);border-radius:9px;padding:11px 12px;color:var(--text);font-family:inherit;font-size:14px;margin-bottom:12px;outline:none;transition:.2s;}
-input:focus{border-color:var(--accent);}
+input,select{width:100%;background:var(--card2);border:1px solid var(--border);border-radius:9px;padding:11px 12px;color:var(--text);font-family:inherit;font-size:14px;margin-bottom:12px;outline:none;transition:.2s;}
+input:focus,select:focus{border-color:var(--accent);}
 .sbtn{width:100%;padding:13px;border:none;border-radius:11px;background:linear-gradient(135deg,var(--green),#059669);color:#fff;font-family:inherit;font-size:15px;font-weight:800;cursor:pointer;}
 
 /* ── صندوق العمولة ── */
@@ -92,8 +114,6 @@ input:focus{border-color:var(--accent);}
 .tx-a{font-size:14px;font-weight:800;font-variant-numeric:tabular-nums;}
 .pos{color:var(--green);}
 .neg{color:var(--red);}
-
-/* ── طلبات السحب ── */
 .badge{display:inline-block;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:700;}
 .badge.pending{background:rgba(245,158,11,.2);color:var(--accent);}
 .badge.approved{background:rgba(16,185,129,.2);color:var(--green);}
@@ -110,13 +130,32 @@ input:focus{border-color:var(--accent);}
 /* ── Spinner ── */
 .spin{display:inline-block;width:15px;height:15px;border:2px solid rgba(0,0,0,.3);border-top-color:#000;border-radius:50%;animation:sp .6s linear infinite;vertical-align:middle;}
 @keyframes sp{to{transform:rotate(360deg);}}
-
 .empty{text-align:center;padding:24px;color:var(--muted);font-size:13px;}
+
+/* ── Modal Overlay ── */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:24px;width:100%;max-width:340px;text-align:center;}
+.modal h3{font-size:18px;font-weight:900;margin-bottom:8px;}
+.modal p{font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.6;}
+
+/* ── Captcha ── */
+.captcha-box{background:var(--card2);border-radius:12px;padding:20px;margin-bottom:16px;}
+.captcha-q{font-size:24px;font-weight:900;color:var(--accent);letter-spacing:4px;margin-bottom:12px;}
+.captcha-input{width:100%;background:var(--bg);border:2px solid var(--border);border-radius:10px;padding:12px;color:var(--text);font-family:inherit;font-size:20px;text-align:center;font-weight:800;outline:none;letter-spacing:4px;}
+.captcha-input:focus{border-color:var(--accent);}
+.captcha-btn{width:100%;padding:13px;border:none;border-radius:11px;background:var(--accent);color:#000;font-family:inherit;font-size:15px;font-weight:900;cursor:pointer;}
+
+/* ── Welcome Message ── */
+.welcome-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:300;display:flex;align-items:center;justify-content:center;padding:20px;}
+.welcome-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px;width:100%;max-width:360px;text-align:center;}
+.welcome-icon{font-size:48px;margin-bottom:12px;}
+.welcome-msg{font-size:15px;line-height:1.8;color:var(--text);margin-bottom:20px;white-space:pre-wrap;}
+.welcome-close{width:100%;padding:13px;border:none;border-radius:12px;background:var(--accent);color:#000;font-family:inherit;font-size:15px;font-weight:900;cursor:pointer;}
 </style>
 </head>
 <body>
 
-<!-- ── شريط علوي ── -->
+<!-- ══ شريط علوي ══ -->
 <div class="topbar">
   <div class="brand">⚡ Reward Ads</div>
   <div style="display:flex;align-items:center;gap:8px">
@@ -154,9 +193,8 @@ input:focus{border-color:var(--accent);}
     </div>
   </div>
 
-  <!-- إعلان بانر 320×50 -->
   <div style="display:flex;justify-content:center;margin-top:6px">
-    <script>atOptions={'key' : 'fc81e16a4944e7d285538116a1a35cb9','format':'iframe','height':50,'width':320,'params':{}};</script>
+    <script>atOptions={'key':'fc81e16a4944e7d285538116a1a35cb9','format':'iframe','height':50,'width':320,'params':{}};</script>
     <script src="https://disintegratehesitate.com/fc81e16a4944e7d285538116a1a35cb9/invoke.js"></script>
   </div>
 </div>
@@ -201,28 +239,39 @@ input:focus{border-color:var(--accent);}
   <div class="card">
     <div class="sec-title">اختر طريقة الدفع</div>
     <div class="wgrid">
-      <div class="wopt sel" onclick="selWallet('Vodafone Cash',this)"><div class="wi">🔴</div><div class="wn">Vodafone Cash</div></div>
-      <div class="wopt"     onclick="selWallet('Etisalat Cash',this)"><div class="wi">🟢</div><div class="wn">Etisalat Cash</div></div>
-      <div class="wopt"     onclick="selWallet('Orange Cash',  this)"><div class="wi">🟠</div><div class="wn">Orange Cash</div></div>
-      <div class="wopt"     onclick="selWallet('WE Pay',       this)"><div class="wi">🔵</div><div class="wn">WE Pay</div></div>
+      <div class="wopt sel" onclick="selWallet('Vodafone Cash',this)"><div class="wi">🔴</div><div class="wn">Vodafone</div></div>
+      <div class="wopt" onclick="selWallet('Etisalat Cash',this)"><div class="wi">🟢</div><div class="wn">Etisalat</div></div>
+      <div class="wopt" onclick="selWallet('Orange Cash',this)"><div class="wi">🟠</div><div class="wn">Orange</div></div>
+      <div class="wopt" onclick="selWallet('WE Pay',this)"><div class="wi">🔵</div><div class="wn">WE Pay</div></div>
+      <div class="wopt" onclick="selWallet('Binance',this)"><div class="wi">🟡</div><div class="wn">Binance</div></div>
+      <div class="wopt" onclick="selWallet('Ethereum ERC20',this)"><div class="wi">🔷</div><div class="wn">ETH</div></div>
+      <div class="wopt" onclick="selWallet('USDT',this)"><div class="wi">💚</div><div class="wn">USDT</div></div>
     </div>
 
-    <label>رقم المحفظة</label>
-    <input type="tel"    id="w-number" placeholder="01xxxxxxxxx" maxlength="11">
+    <!-- شبكة USDT — تظهر فقط عند اختيار USDT -->
+    <div id="usdt-network-field" style="display:none;margin-bottom:12px">
+      <label>اختر شبكة USDT</label>
+      <select id="usdt-network" onchange="onUsdtNetChange()"></select>
+    </div>
 
-    <label>المبلغ المطلوب (ج.م)</label>
+    <!-- حقل المحفظة — يتغير حسب الطريقة -->
+    <div id="wallet-field">
+      <label id="wallet-label">رقم المحفظة</label>
+      <input type="tel" id="w-number" placeholder="01xxxxxxxxx" maxlength="15">
+    </div>
+
+    <label>المبلغ المطلوب</label>
     <input type="number" id="w-amount" placeholder="الحد الأدنى: 5 ج.م" min="1" step="0.00001" oninput="calcCommission()">
 
-    <!-- تفاصيل العمولة -->
     <div class="comm-box">
-      <div class="cr"><span style="color:var(--muted)">المبلغ المطلوب:</span><span id="c-amount">0.00000 ج.م</span></div>
-      <div class="cr"><span style="color:var(--muted)">عمولة الخدمة:</span><span style="color:var(--red)" id="c-comm">1.00000 ج.م</span></div>
-      <div class="cr total"><span>إجمالي الخصم من رصيدك:</span><span style="color:var(--accent)" id="c-total">0.00000 ج.م</span></div>
+      <div class="cr"><span style="color:var(--muted)">المبلغ المطلوب:</span><span id="c-amount">0.00000</span></div>
+      <div class="cr"><span style="color:var(--muted)">رسوم الخدمة:</span><span style="color:var(--red)" id="c-comm">0.00000</span></div>
+      <div class="cr total"><span>إجمالي الخصم:</span><span style="color:var(--accent)" id="c-total">0.00000</span></div>
     </div>
 
     <div style="display:flex;justify-content:space-between;margin-bottom:12px">
       <span style="font-size:12px;color:var(--muted)">رصيدك المتاح:</span>
-      <span style="font-size:14px;font-weight:800;color:var(--accent);font-variant-numeric:tabular-nums" id="avail">0.00000 ج.م</span>
+      <span style="font-size:14px;font-weight:800;color:var(--accent)" id="avail">0.00000 ج.م</span>
     </div>
     <button class="sbtn" onclick="doWithdraw()">💸 طلب السحب</button>
   </div>
@@ -248,357 +297,455 @@ input:focus{border-color:var(--accent);}
 
 <div class="toast" id="toast"></div>
 
-<!-- إعلان Popunder — يشتغل تلقائياً -->
-<script src="https://disintegratehesitate.com/29/75/d4/2975d4821903bf0e219f9c1db479d063.js"></script>
+<!-- ══ Captcha Modal ══ -->
+<div class="overlay" id="captcha-overlay" style="display:none">
+  <div class="modal">
+    <h3>🤖 تحقق بشري</h3>
+    <p>أثبت أنك لست روبوت<br>أجب على السؤال التالي:</p>
+    <div class="captcha-box">
+      <div class="captcha-q" id="captcha-q">3 + 5 = ?</div>
+      <input class="captcha-input" type="number" id="captcha-ans" placeholder="الإجابة">
+    </div>
+    <button class="captcha-btn" onclick="submitCaptcha()">✅ تأكيد</button>
+  </div>
+</div>
 
-<!-- إعلان Native Banner -->
+<!-- ══ Welcome Message Modal ══ -->
+<div class="welcome-overlay" id="welcome-overlay" style="display:none">
+  <div class="welcome-card">
+    <div class="welcome-icon">👋</div>
+    <div class="welcome-msg" id="welcome-msg"></div>
+    <button class="welcome-close" onclick="closeWelcome()">ابدأ الآن ⚡</button>
+  </div>
+</div>
+
+<!-- إعلانات -->
+<script src="https://disintegratehesitate.com/29/75/d4/2975d4821903bf0e219f9c1db479d063.js"></script>
 <script async="async" data-cfasync="false" src="https://disintegratehesitate.com/7ad8799002e11197fc49cf8d0d1dc55a/invoke.js"></script>
 <div id="container-7ad8799002e11197fc49cf8d0d1dc55a"></div>
 
 <script>
-// ── التحقق من التوكن ──────────────────────────────────────────────────
 const TOKEN = localStorage.getItem('rw_token');
 if(!TOKEN) location.replace('/');
 
-// ── الحالة ────────────────────────────────────────────────────────────
 let user     = JSON.parse(localStorage.getItem('rw_user')     || '{}');
 let sett     = JSON.parse(localStorage.getItem('rw_settings') || '{}');
 let wallet   = 'Vodafone Cash';
-let cdTimer  = null;   // عداد الانتظار بين الإعلانات
-let adTimer  = null;   // عداد مشاهدة الإعلان
+let cdTimer  = null;
+let adTimer  = null;
+let captchaExpected = '';
+let pendingAdToken  = null;
 
-// ── API ────────────────────────────────────────────────────────────────
-async function api(url, body = null){
+// ── Wallet config ────────────────────────────────────────────
+const WALLET_CONFIG = {
+  'Vodafone Cash':  { icon:'🔴', label:'رقم المحفظة',            ph:'01xxxxxxxxx',                 type:'tel',  min_key:'min_vodafone',  fee_key:'fee_vodafone'  },
+  'Etisalat Cash':  { icon:'🟢', label:'رقم المحفظة',            ph:'01xxxxxxxxx',                 type:'tel',  min_key:'min_etisalat',  fee_key:'fee_etisalat'  },
+  'Orange Cash':    { icon:'🟠', label:'رقم المحفظة',            ph:'01xxxxxxxxx',                 type:'tel',  min_key:'min_orange',    fee_key:'fee_orange'    },
+  'WE Pay':         { icon:'🔵', label:'رقم المحفظة',            ph:'01xxxxxxxxx',                 type:'tel',  min_key:'min_we',        fee_key:'fee_we'        },
+  'Binance':        { icon:'🟡', label:'Binance Pay ID',          ph:'أدخل Binance ID الخاص بك',  type:'text', min_key:'min_binance',   fee_key:'fee_binance'   },
+  'Ethereum ERC20': { icon:'🔷', label:'عنوان المحفظة (ERC20)',  ph:'0x...',                       type:'text', min_key:'min_ethereum',  fee_key:'fee_ethereum'  },
+};
+
+// شبكات USDT — تُجلب من السيرفر
+let usdtNetworks = ['TRC20'];
+let activeUsdtNet = 'TRC20';
+
+// ── API ──────────────────────────────────────────────────────
+async function api(url, body=null){
   try{
-    const r = await fetch(url, {
-      method:  body !== null ? 'POST' : 'GET',
-      headers: {
-        'Content-Type':              'application/json',
-        'X-Auth-Token':              TOKEN,
-        'ngrok-skip-browser-warning':'true'
-      },
-      body: body !== null ? JSON.stringify(body) : null
+    const r = await fetch(url,{
+      method: body!==null?'POST':'GET',
+      headers:{'Content-Type':'application/json','X-Auth-Token':TOKEN,'ngrok-skip-browser-warning':'true'},
+      body: body!==null?JSON.stringify(body):null
     });
-    if(r.status === 401){ logout(); return {}; }
+    if(r.status===401){logout();return{};}
     return await r.json();
-  } catch(e){
-    return { error: 'خطأ في الاتصال بالسيرفر' };
-  }
+  }catch(e){return{error:'خطأ في الاتصال'};}
 }
 
-// ── رابط الإحالة ──────────────────────────────────────────────────────
-// ملاحظة للمبرمج: غيّر @medo_add_bot باسم البوت الفعلي
-function buildRefLink(){
-  return 'https://t.me/medo_add_bot?start=ref_' + (user.user_id || '');
-}
-
-// ── تنسيق الأرقام بدقة 5 خانات عشرية ────────────────────────────────
-function fmt(n){ return parseFloat(n || 0).toFixed(5); }
-
-// ══ التهيئة ══════════════════════════════════════════════════════════
-(async () => {
-  // اعرض البيانات المحفوظة فوراً بدون انتظار
+// ── INIT ────────────────────────────────────────────────────
+(async()=>{
   renderUI();
-  // استكمل عداد لو كان شغال قبل ما يطلع
   resumeAdIfNeeded();
-  // حدّث من السيرفر في الخلفية
+
+  // جلب إعدادات الموقع (ثيم + رسالة ترحيب)
+  // جلب شبكات USDT
+  const netsData = await api('/api/usdt_networks');
+  if(netsData.networks?.length){
+    usdtNetworks  = netsData.networks;
+    activeUsdtNet = netsData.default || netsData.networks[0];
+  }
+
+  const cfg = await api('/api/site_config');
+  if(cfg.active_theme) applyTheme(cfg.active_theme);
+  if(cfg.welcome_active && cfg.welcome_message && !sessionStorage.getItem('welcomed')){
+    showWelcome(cfg.welcome_message);
+  }
+
   const d = await api('/api/me');
   if(!d.success) return;
-  user = d.user;
-  sett = d.settings;
-  localStorage.setItem('rw_user',     JSON.stringify(user));
-  localStorage.setItem('rw_settings', JSON.stringify(sett));
+  user = d.user; sett = d.settings;
+  localStorage.setItem('rw_user',    JSON.stringify(user));
+  localStorage.setItem('rw_settings',JSON.stringify(sett));
   renderUI();
-  // ضبط حالة زر الإعلان
-  const cd = d.ad_status?.remaining_cooldown || 0;
-  if(cd > 0) showCooldown(cd);
-  else        setBtnReady();
+  const cd = d.ad_status?.remaining_cooldown||0;
+  cd>0 ? showCooldown(cd) : setBtnReady();
 })();
 
-// ── رسم الواجهة ───────────────────────────────────────────────────────
+// ── Theme ────────────────────────────────────────────────────
+function applyTheme(theme){
+  document.body.className = theme==='dark_gold'?'':('theme-'+theme);
+}
+
+// ── Welcome ──────────────────────────────────────────────────
+function showWelcome(msg){
+  document.getElementById('welcome-msg').textContent = msg;
+  document.getElementById('welcome-overlay').style.display = 'flex';
+}
+function closeWelcome(){
+  document.getElementById('welcome-overlay').style.display = 'none';
+  sessionStorage.setItem('welcomed','1');
+}
+
+// ── UI ───────────────────────────────────────────────────────
+function fmt(n){return parseFloat(n||0).toFixed(5);}
+function buildRefLink(){return 'https://t.me/medo_add_bot?start=ref_'+(user.user_id||'');}
+
 function renderUI(){
-  const name = user.first_name || user.username || '';
-  document.getElementById('top-user').textContent    = name ? 'مرحباً ' + name : '';
-  document.getElementById('balance').textContent     = fmt(user.balance);
-  document.getElementById('earned-sub').textContent  = 'إجمالي المكتسب: ' + fmt(user.total_earned) + ' ج.م';
-  document.getElementById('rc').textContent          = user.referral_count || 0;
-  document.getElementById('rc2').textContent         = user.referral_count || 0;
-  document.getElementById('avail').textContent       = fmt(user.balance) + ' ج.م';
-  const max   = sett.max_ads_per_day || 100;
-  const today = user.ads_today || 0;
-  document.getElementById('ads-today').textContent   = today + '/' + max;
-  // تحديث placeholder خانة المبلغ
-  const wamt = document.getElementById('w-amount');
-  if(wamt){
-    const minW = sett.min_withdraw || 5;
-    wamt.placeholder = 'الحد الأدنى: ' + fmt(minW) + ' ج.م';
-    wamt.min = minW;
-  }
-  // رابط الإحالة
+  document.getElementById('top-user').textContent   = user.first_name||user.username||'';
+  document.getElementById('balance').textContent    = fmt(user.balance);
+  document.getElementById('earned-sub').textContent = 'إجمالي المكتسب: '+fmt(user.total_earned)+' ج.م';
+  document.getElementById('rc').textContent         = user.referral_count||0;
+  document.getElementById('rc2').textContent        = user.referral_count||0;
+  document.getElementById('avail').textContent      = fmt(user.balance)+' ج.م';
+  const max=sett.max_ads_per_day||100, today=user.ads_today||0;
+  document.getElementById('ads-today').textContent  = today+'/'+max;
   const link = buildRefLink();
   document.getElementById('rl-home').textContent = link;
   document.getElementById('rl-ref').textContent  = link;
+  const wamt = document.getElementById('w-amount');
+  if(wamt) updateWalletField();
   calcCommission();
 }
 
-// ── ضبط زر الإعلان ────────────────────────────────────────────────────
 function setBtnReady(){
-  const btn = document.getElementById('watch-btn');
-  const max   = sett.max_ads_per_day || 100;
-  const today = user.ads_today || 0;
-  if(today >= max){
-    btn.disabled = true;
-    document.getElementById('btn-text').textContent = '🚫 وصلت للحد اليومي';
-    document.getElementById('btn-sub').textContent  = today + '/' + max + ' إعلان اليوم';
+  const btn=document.getElementById('watch-btn');
+  const max=sett.max_ads_per_day||100, today=user.ads_today||0;
+  if(today>=max){
+    btn.disabled=true;
+    document.getElementById('btn-text').textContent='🚫 وصلت للحد اليومي';
+    document.getElementById('btn-sub').textContent=today+'/'+max+' إعلان اليوم';
     return;
   }
-  btn.disabled = false;
-  document.getElementById('btn-text').textContent = '📺 شاهد إعلان واكسب';
-  document.getElementById('btn-sub').textContent  = 'المكافأة: ' + fmt(sett.reward_per_ad || 0.5) + ' ج.م — ' + today + '/' + max;
+  btn.disabled=false;
+  document.getElementById('btn-text').textContent='📺 شاهد إعلان واكسب';
+  document.getElementById('btn-sub').textContent='المكافأة: '+fmt(sett.reward_per_ad||0.5)+' ج.م — '+today+'/'+max;
 }
 
-// ── عداد الانتظار بين الإعلانات ───────────────────────────────────────
 function showCooldown(seconds){
   clearInterval(cdTimer);
-  const btn = document.getElementById('watch-btn');
-  btn.disabled = true;
-  let sec = Math.ceil(seconds);
-  const tick = () => {
-    if(sec <= 0){ clearInterval(cdTimer); setBtnReady(); return; }
-    document.getElementById('btn-text').textContent = '⏳ انتظر قبل الإعلان التالي';
-    document.getElementById('btn-sub').textContent  = sec + ' ثانية';
+  const btn=document.getElementById('watch-btn');
+  btn.disabled=true;
+  let sec=Math.ceil(seconds);
+  const tick=()=>{
+    if(sec<=0){clearInterval(cdTimer);setBtnReady();return;}
+    document.getElementById('btn-text').textContent='⏳ انتظر قبل الإعلان التالي';
+    document.getElementById('btn-sub').textContent=sec+' ثانية';
     sec--;
   };
-  tick();
-  cdTimer = setInterval(tick, 1000);
+  tick(); cdTimer=setInterval(tick,1000);
 }
 
-// ── استئناف عداد الإعلان لو المستخدم طلع وراجع ───────────────────────
-function resumeAdIfNeeded(){
-  const startTime = parseInt(localStorage.getItem('rw_ad_start')    || '0');
-  const duration  = parseInt(localStorage.getItem('rw_ad_duration') || '0');
-  const token     = localStorage.getItem('rw_ad_token');
-  if(!startTime || !duration || !token) return;
-
-  const elapsed   = (Date.now() - startTime) / 1000;
-  const remaining = duration - elapsed;
-
-  if(remaining > 0){
-    // لسه في وقت — اعرض العداد
-    const btn = document.getElementById('watch-btn');
-    btn.disabled = true;
-    let sec = Math.ceil(remaining);
-    clearInterval(adTimer);
-    const tick = () => {
-      if(sec <= 0){ clearInterval(adTimer); finishAd(token); return; }
-      document.getElementById('btn-text').innerHTML  = '<span class="spin"></span> جارٍ التحقق من الإعلان...';
-      document.getElementById('btn-sub').textContent = 'انتظر ' + sec + ' ثانية';
-      sec--;
-    };
-    tick();
-    adTimer = setInterval(tick, 1000);
-  } else {
-    // الوقت خلص وهو كان برّا — ابعت للسيرفر مباشرة
-    finishAd(token);
-  }
-}
-
-// ══ مشاهدة الإعلان ════════════════════════════════════════════════════
+// ══ مشاهدة الإعلان ══════════════════════════════════════════
 async function watchAd(){
-  const btn = document.getElementById('watch-btn');
+  const btn=document.getElementById('watch-btn');
   if(btn.disabled) return;
-  btn.disabled = true;
+  btn.disabled=true;
 
-  // ① فتح الـ Smartlink فوراً مع الضغطة (بديل للـ Popunder لو اتحجب)
-  try{
-    window.open('https://disintegratehesitate.com/tacznwi1?key=7df3575307b4b03ba008a6c6ad703312', '_blank');
-  } catch(e){}
+  // فتح الـ Smartlink كإعلان
+  try{ window.open('https://disintegratehesitate.com/tacznwi1?key=7df3575307b4b03ba008a6c6ad703312','_blank'); }catch(e){}
 
-  document.getElementById('btn-text').textContent = '⏳ جارٍ تجهيز الإعلان...';
-  document.getElementById('btn-sub').textContent  = '';
+  document.getElementById('btn-text').textContent='⏳ جارٍ تجهيز الإعلان...';
+  document.getElementById('btn-sub').textContent='';
 
-  // ② اطلب توكن الإعلان من السيرفر
-  const td = await api('/api/ad_token', {});
+  const td = await api('/api/ad_token',{});
   if(td.error){
-    showToast(td.error, 'error');
-    if(td.wait) showCooldown(td.wait);
-    else        setBtnReady();
+    showToast(td.error,'error');
+    td.wait ? showCooldown(td.wait) : setBtnReady();
     return;
   }
 
   const token    = td.token;
-  const duration = td.duration || sett.cooldown_seconds || 20;
+  const duration = td.duration||sett.cooldown_seconds||20;
 
-  // ③ احفظ في localStorage عشان لو طلع يرجع يكمّل
+  // حفظ في localStorage
   localStorage.setItem('rw_ad_token',    token);
   localStorage.setItem('rw_ad_start',    Date.now().toString());
   localStorage.setItem('rw_ad_duration', duration.toString());
 
-  // ④ عداد العد التنازلي
-  let sec = duration;
+  // عداد
+  let sec=duration;
   clearInterval(adTimer);
-  const tick = () => {
-    if(sec <= 0){ clearInterval(adTimer); finishAd(token); return; }
-    document.getElementById('btn-text').innerHTML  = '<span class="spin"></span> جارٍ التحقق من الإعلان...';
-    document.getElementById('btn-sub').textContent = 'انتظر ' + sec + ' ثانية';
+  const tick=()=>{
+    if(sec<=0){clearInterval(adTimer);finishAd(token);return;}
+    document.getElementById('btn-text').innerHTML='<span class="spin"></span> جارٍ التحقق من الإعلان...';
+    document.getElementById('btn-sub').textContent='انتظر '+sec+' ثانية';
     sec--;
   };
-  tick();
-  adTimer = setInterval(tick, 1000);
+  tick(); adTimer=setInterval(tick,1000);
 }
 
-// ── إنهاء الإعلان وإرسال المكافأة ─────────────────────────────────────
+// ── استئناف لو طلع وراجع ─────────────────────────────────────
+function resumeAdIfNeeded(){
+  const start=parseInt(localStorage.getItem('rw_ad_start')||'0');
+  const dur  =parseInt(localStorage.getItem('rw_ad_duration')||'0');
+  const tok  =localStorage.getItem('rw_ad_token');
+  if(!start||!dur||!tok) return;
+  const elapsed=( Date.now()-start)/1000;
+  const remaining=dur-elapsed;
+  if(remaining>0){
+    // لسه في وقت — اعرض تنبيه وعداد
+    showToast('⚠️ لم يتم احتساب الإعلان — يرجى انتظار الوقت داخل الإعلان','error');
+    const btn=document.getElementById('watch-btn');
+    btn.disabled=true;
+    let sec=Math.ceil(remaining);
+    clearInterval(adTimer);
+    const tick=()=>{
+      if(sec<=0){clearInterval(adTimer);finishAd(tok);return;}
+      document.getElementById('btn-text').innerHTML='<span class="spin"></span> جارٍ التحقق من الإعلان...';
+      document.getElementById('btn-sub').textContent='انتظر '+sec+' ثانية';
+      sec--;
+    };
+    tick(); adTimer=setInterval(tick,1000);
+  } else {
+    finishAd(tok);
+  }
+}
+
+// ── إنهاء الإعلان ─────────────────────────────────────────────
 async function finishAd(token){
   clearInterval(adTimer);
-  document.getElementById('btn-text').textContent = '⏳ جارٍ إضافة المكافأة...';
-  document.getElementById('btn-sub').textContent  = '';
+  document.getElementById('btn-text').textContent='⏳ جارٍ إضافة المكافأة...';
+  document.getElementById('btn-sub').textContent='';
 
-  const d = await api('/api/watch_ad', { token });
+  const d=await api('/api/watch_ad',{token});
 
-  // امسح البيانات المؤقتة دايماً
   localStorage.removeItem('rw_ad_token');
   localStorage.removeItem('rw_ad_start');
   localStorage.removeItem('rw_ad_duration');
 
   if(d.success){
     user.balance      = d.new_balance;
-    user.total_earned = (user.total_earned || 0) + d.reward;
+    user.total_earned = (user.total_earned||0)+d.reward;
     user.ads_today    = d.ads_today;
-    localStorage.setItem('rw_user', JSON.stringify(user));
+    localStorage.setItem('rw_user',JSON.stringify(user));
     renderUI();
-    showToast('✅ تمت إضافة ' + fmt(d.reward) + ' ج.م لرصيدك!', 'success');
-    showCooldown(sett.cooldown_seconds || 20);
+    showToast('✅ تمت إضافة '+fmt(d.reward)+' ج.م لرصيدك!','success');
+
+    // هل نعرض الـ captcha؟
+    if(d.need_captcha){
+      setTimeout(()=>showCaptcha(),500);
+    } else {
+      showCooldown(sett.cooldown_seconds||20);
+    }
   } else {
-    showToast(d.error || 'حدث خطأ', 'error');
+    showToast(d.error||'حدث خطأ','error');
     setBtnReady();
   }
 }
 
-// ══ التنقل بين الصفحات ════════════════════════════════════════════════
-function goPage(name){
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nb').forEach(b => b.classList.remove('active'));
-  document.getElementById('page-' + name).classList.add('active');
-  document.getElementById('nav-'  + name).classList.add('active');
-  if(name === 'hist')     loadTransactions();
-  if(name === 'withdraw') loadWithdrawals();
-  if(name === 'bots')     loadBots();
+// ══ Captcha ══════════════════════════════════════════════════
+function showCaptcha(){
+  // توليد سؤال عشوائي
+  const ops=['+','-','×'];
+  const op=ops[Math.floor(Math.random()*ops.length)];
+  let a,b,ans;
+  if(op==='+'){a=Math.floor(Math.random()*20)+1;b=Math.floor(Math.random()*20)+1;ans=a+b;}
+  else if(op==='-'){a=Math.floor(Math.random()*20)+10;b=Math.floor(Math.random()*a)+1;ans=a-b;}
+  else{a=Math.floor(Math.random()*10)+1;b=Math.floor(Math.random()*10)+1;ans=a*b;}
+
+  captchaExpected = String(ans);
+  document.getElementById('captcha-q').textContent=`${a} ${op} ${b} = ?`;
+  document.getElementById('captcha-ans').value='';
+  document.getElementById('captcha-overlay').style.display='flex';
+  setTimeout(()=>document.getElementById('captcha-ans').focus(),100);
 }
 
-// ══ بوتات الربح ═══════════════════════════════════════════════════════
-async function loadBots(){
-  const el = document.getElementById('bots-list');
-  el.innerHTML = '<div class="empty">⏳ جارٍ التحميل...</div>';
-  const d = await api('/api/featured_bots');
-  if(!d.bots?.length){
-    el.innerHTML = '<div class="empty">🤖 لا توجد بوتات مميزة حالياً</div>';
-    return;
+async function submitCaptcha(){
+  const ans=document.getElementById('captcha-ans').value.trim();
+  if(!ans){showToast('أدخل الإجابة','error');return;}
+  const d=await api('/api/verify_captcha',{answer:ans,expected:captchaExpected});
+  if(d.success){
+    document.getElementById('captcha-overlay').style.display='none';
+    showToast('✅ تم التحقق بنجاح','success');
+    showCooldown(sett.cooldown_seconds||20);
+  } else {
+    showToast(d.error||'إجابة خاطئة','error');
+    document.getElementById('captcha-ans').value='';
+    // تغيير السؤال
+    showCaptcha();
   }
-  el.innerHTML = d.bots.map(b => `
+}
+
+document.getElementById('captcha-ans').addEventListener('keydown',e=>{
+  if(e.key==='Enter') submitCaptcha();
+});
+
+// ══ التنقل ═══════════════════════════════════════════════════
+function goPage(name){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  document.getElementById('nav-'+name).classList.add('active');
+  if(name==='hist')     loadTransactions();
+  if(name==='withdraw') loadWithdrawals();
+  if(name==='bots')     loadBots();
+}
+
+// ══ بوتات الربح ══════════════════════════════════════════════
+async function loadBots(){
+  const el=document.getElementById('bots-list');
+  el.innerHTML='<div class="empty">⏳ جارٍ التحميل...</div>';
+  const d=await api('/api/featured_bots');
+  if(!d.bots?.length){el.innerHTML='<div class="empty">🤖 لا توجد بوتات حالياً</div>';return;}
+  el.innerHTML=d.bots.map(b=>`
     <div class="bot-card">
-      <div class="bot-top">
-        <div class="bot-icon">🤖</div>
-        <div class="bot-title">${b.title}</div>
-      </div>
+      <div class="bot-top"><div class="bot-icon">🤖</div><div class="bot-title">${b.title}</div></div>
       <div class="bot-msg">${b.message}</div>
       <a class="bot-btn" href="${b.bot_link}" target="_blank">✈️ فتح البوت</a>
     </div>`).join('');
 }
 
-// ══ السحب ═════════════════════════════════════════════════════════════
-function selWallet(name, el){
-  wallet = name;
-  document.querySelectorAll('.wopt').forEach(e => e.classList.remove('sel'));
+// ══ السحب ════════════════════════════════════════════════════
+function selWallet(name,el){
+  wallet = name==='USDT' ? ('USDT '+activeUsdtNet) : name;
+  document.querySelectorAll('.wopt').forEach(e=>e.classList.remove('sel'));
   el.classList.add('sel');
+  // إظهار/إخفاء شبكة USDT
+  const usdtField = document.getElementById('usdt-network-field');
+  if(name==='USDT'){
+    usdtField.style.display='block';
+    buildUsdtSelect();
+  } else {
+    usdtField.style.display='none';
+  }
+  updateWalletField();
+  calcCommission();
+}
+
+function buildUsdtSelect(){
+  const sel = document.getElementById('usdt-network');
+  sel.innerHTML = usdtNetworks.map(n=>
+    `<option value="${n}" ${n===activeUsdtNet?'selected':''}>${n}</option>`
+  ).join('');
+}
+
+function onUsdtNetChange(){
+  activeUsdtNet = document.getElementById('usdt-network').value;
+  wallet = 'USDT '+activeUsdtNet;
+  updateWalletField();
+  calcCommission();
+}
+
+function updateWalletField(){
+  let cfg;
+  if(wallet.startsWith('USDT')){
+    const net = wallet.split(' ')[1]||'TRC20';
+    cfg = {
+      label: `عنوان محفظة USDT (${net})`,
+      ph:    `أدخل عنوان المحفظة (${net})`,
+      type:  'text',
+      min_key: 'min_usdt',
+      fee_key: 'fee_usdt'
+    };
+  } else {
+    cfg = WALLET_CONFIG[wallet]||WALLET_CONFIG['Vodafone Cash'];
+  }
+  document.getElementById('wallet-label').textContent = cfg.label;
+  const inp=document.getElementById('w-number');
+  inp.placeholder=cfg.ph;
+  inp.type=cfg.type;
+  inp.maxLength = cfg.type==='tel' ? 11 : 200;
 }
 
 function calcCommission(){
-  const amount = parseFloat(document.getElementById('w-amount')?.value || 0) || 0;
-  const comm   = parseFloat(sett.withdrawal_commission || 1);
-  document.getElementById('c-amount').textContent = fmt(amount) + ' ج.م';
-  document.getElementById('c-comm').textContent   = fmt(comm)   + ' ج.م';
-  document.getElementById('c-total').textContent  = fmt(amount + comm) + ' ج.م';
+  let min_key, fee_key;
+  if(wallet.startsWith('USDT')){
+    min_key='min_usdt'; fee_key='fee_usdt';
+  } else {
+    const cfg = WALLET_CONFIG[wallet]||WALLET_CONFIG['Vodafone Cash'];
+    min_key=cfg.min_key; fee_key=cfg.fee_key;
+  }
+  const amount = parseFloat(document.getElementById('w-amount')?.value||0)||0;
+  const comm   = parseFloat(sett[fee_key]||sett.withdrawal_commission||1);
+  const minW   = parseFloat(sett[min_key]||sett.min_withdraw||5);
+  document.getElementById('c-amount').textContent = fmt(amount)+' ج.م';
+  document.getElementById('c-comm').textContent   = fmt(comm)+' ج.م';
+  document.getElementById('c-total').textContent  = fmt(amount+comm)+' ج.م';
+  // تحديث placeholder
+  const wamt=document.getElementById('w-amount');
+  if(wamt) wamt.placeholder='الحد الأدنى: '+fmt(minW)+' ج.م';
 }
 
 async function doWithdraw(){
-  const number = document.getElementById('w-number').value.trim();
-  const amount = parseFloat(document.getElementById('w-amount').value);
-  const comm   = parseFloat(sett.withdrawal_commission || 1);
-  const minW   = parseFloat(sett.min_withdraw || 5);
-
-  if(!number || number.length < 10){ showToast('أدخل رقم محفظة صحيح', 'error'); return; }
-  if(!amount || amount < minW)       { showToast('الحد الأدنى ' + fmt(minW) + ' ج.م', 'error'); return; }
-  if((amount + comm) > (user.balance || 0)){
-    showToast('رصيد غير كافٍ (المبلغ + عمولة ' + fmt(comm) + ' ج.م)', 'error'); return;
-  }
-
-  const d = await api('/api/withdraw', { amount, wallet_type: wallet, wallet_number: number });
+  const number=document.getElementById('w-number').value.trim();
+  const amount=parseFloat(document.getElementById('w-amount').value);
+  let min_key,fee_key;
+  if(wallet.startsWith('USDT')){min_key='min_usdt';fee_key='fee_usdt';}
+  else{const cfg=WALLET_CONFIG[wallet]||WALLET_CONFIG['Vodafone Cash'];min_key=cfg.min_key;fee_key=cfg.fee_key;}
+  const comm  =parseFloat(sett[fee_key]||sett.withdrawal_commission||1);
+  const minW  =parseFloat(sett[min_key]||sett.min_withdraw||5);
+  if(!number||number.length<3){showToast('أدخل بيانات المحفظة','error');return;}
+  if(!amount||amount<minW){showToast('الحد الأدنى '+fmt(minW)+' ج.م','error');return;}
+  if((amount+comm)>(user.balance||0)){showToast('رصيد غير كافٍ (المبلغ + رسوم '+fmt(comm)+' ج.م)','error');return;}
+  const d=await api('/api/withdraw',{amount,wallet_type:wallet,wallet_number:number});
   if(d.success){
-    user.balance = Math.max(0, (user.balance || 0) - (amount + comm));
-    localStorage.setItem('rw_user', JSON.stringify(user));
+    user.balance=Math.max(0,(user.balance||0)-(amount+comm));
+    localStorage.setItem('rw_user',JSON.stringify(user));
     renderUI();
-    document.getElementById('w-number').value = '';
-    document.getElementById('w-amount').value = '';
+    document.getElementById('w-number').value='';
+    document.getElementById('w-amount').value='';
     calcCommission();
-    showToast('✅ تم إرسال طلب السحب بنجاح', 'success');
+    showToast('✅ تم إرسال طلب السحب','success');
     loadWithdrawals();
-  } else {
-    showToast(d.error || 'حدث خطأ', 'error');
-  }
+  } else showToast(d.error||'حدث خطأ','error');
 }
 
 async function loadWithdrawals(){
-  const d  = await api('/api/my_withdrawals', {});
-  const el = document.getElementById('w-hist');
-  if(!d.withdrawals?.length){ el.innerHTML = '<div class="empty">لا توجد طلبات بعد</div>'; return; }
-  el.innerHTML = d.withdrawals.map(w => `
+  const d=await api('/api/my_withdrawals',{});
+  const el=document.getElementById('w-hist');
+  if(!d.withdrawals?.length){el.innerHTML='<div class="empty">لا توجد طلبات بعد</div>';return;}
+  el.innerHTML=d.withdrawals.map(w=>`
     <div class="witem">
-      <div class="wrow">
-        <strong>${w.wallet_type} — ${fmt(w.amount)} ج.م</strong>
-        <span class="badge ${w.status}">${statusLabel(w.status)}</span>
-      </div>
+      <div class="wrow"><strong>${w.wallet_type} — ${fmt(w.amount)} ج.م</strong><span class="badge ${w.status}">${stL(w.status)}</span></div>
       <div style="font-size:11px;color:var(--muted);margin-top:4px">${w.wallet_number} · ${w.date}</div>
     </div>`).join('');
 }
 
 async function loadTransactions(){
-  const d  = await api('/api/transactions', {});
-  const el = document.getElementById('tx-list');
-  if(!d.transactions?.length){ el.innerHTML = '<div class="empty">لا توجد عمليات بعد</div>'; return; }
-  el.innerHTML = d.transactions.map(t => `
+  const d=await api('/api/transactions',{});
+  const el=document.getElementById('tx-list');
+  if(!d.transactions?.length){el.innerHTML='<div class="empty">لا توجد عمليات بعد</div>';return;}
+  el.innerHTML=d.transactions.map(t=>`
     <div class="tx">
       <div class="tx-l">
         <span style="font-size:19px">${t.icon}</span>
-        <div>
-          <div class="tx-d">${t.description}</div>
-          <div class="tx-dt">${t.date}</div>
-        </div>
+        <div><div class="tx-d">${t.description}</div><div class="tx-dt">${t.date}</div></div>
       </div>
-      <span class="tx-a ${t.amount >= 0 ? 'pos' : 'neg'}">${t.amount >= 0 ? '+' : ''}${fmt(t.amount)}</span>
+      <span class="tx-a ${t.amount>=0?'pos':'neg'}">${t.amount>=0?'+':''}${fmt(t.amount)}</span>
     </div>`).join('');
 }
 
-// ══ مساعدات ═══════════════════════════════════════════════════════════
-function copyRef(){
-  navigator.clipboard?.writeText(buildRefLink())
-    .then(() => showToast('✅ تم نسخ رابط الإحالة', 'success'));
+// ══ مساعدات ══════════════════════════════════════════════════
+function copyRef(){navigator.clipboard?.writeText(buildRefLink()).then(()=>showToast('✅ تم نسخ رابط الإحالة','success'));}
+function shareWhatsapp(){window.open('https://wa.me/?text='+encodeURIComponent('انضم وشاهد إعلانات واكسب مكافآت فورية! '+buildRefLink()));}
+function stL(s){return{pending:'⏳ معلق',approved:'✅ مقبول',rejected:'❌ مرفوض'}[s]||s;}
+function showToast(msg,type='success'){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.className='toast '+type+' show';
+  setTimeout(()=>t.classList.remove('show'),3000);
 }
-function shareWhatsapp(){
-  window.open('https://wa.me/?text=' + encodeURIComponent('انضم وشاهد إعلانات واكسب مكافآت فورية! ' + buildRefLink()));
-}
-function statusLabel(s){
-  return { pending: '⏳ معلق', approved: '✅ مقبول', rejected: '❌ مرفوض' }[s] || s;
-}
-function showToast(msg, type = 'success'){
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.className   = 'toast ' + type + ' show';
-  setTimeout(() => t.classList.remove('show'), 3000);
-}
-function logout(){
-  localStorage.clear();
-  location.replace('/');
-}
+function logout(){localStorage.clear();location.replace('/');}
 </script>
 </body>
 </html>
