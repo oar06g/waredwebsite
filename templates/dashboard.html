@@ -5,44 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
 <title>Reward Ads</title>
-<style id="theme-style">
-/* ── الثيمات ── */
-:root {
-  --bg:#0a0e1a; --card:#111827; --card2:#1a2235;
-  --accent:#f59e0b; --green:#10b981; --blue:#3b82f6;
-  --red:#ef4444; --purple:#8b5cf6;
-  --text:#f1f5f9; --muted:#64748b; --border:#1e293b;
-}
-/* THEME: ocean_blue */
-.theme-ocean_blue {
-  --bg:#020617; --card:#0f172a; --card2:#1e3a5f;
-  --accent:#38bdf8; --green:#34d399; --blue:#818cf8;
-  --text:#e0f2fe; --muted:#64748b; --border:#1e3a5f;
-}
-/* THEME: emerald */
-.theme-emerald {
-  --bg:#022c22; --card:#064e3b; --card2:#065f46;
-  --accent:#34d399; --green:#a7f3d0; --blue:#6ee7b7;
-  --text:#ecfdf5; --muted:#6b7280; --border:#065f46;
-}
-/* THEME: purple_night */
-.theme-purple_night {
-  --bg:#0f0520; --card:#1e0a3c; --card2:#2d1458;
-  --accent:#a855f7; --green:#34d399; --blue:#818cf8;
-  --text:#f5f3ff; --muted:#7c3aed; --border:#2d1458;
-}
-/* THEME: light */
-.theme-light {
-  --bg:#f8fafc; --card:#ffffff; --card2:#f1f5f9;
-  --accent:#f59e0b; --green:#10b981; --blue:#3b82f6;
-  --red:#ef4444; --purple:#8b5cf6;
-  --text:#1e293b; --muted:#64748b; --border:#e2e8f0;
-}
-
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:70px;transition:background .3s;}
+<style>
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
-
+/* ── الثيمات ── */
+:root{--bg:#0a0e1a;--card:#111827;--card2:#1a2235;--accent:#f59e0b;--green:#10b981;--blue:#3b82f6;--red:#ef4444;--purple:#8b5cf6;--text:#f1f5f9;--muted:#64748b;--border:#1e293b;}
+.theme-ocean_blue{--bg:#020617;--card:#0f172a;--card2:#1e3a5f;--accent:#38bdf8;--green:#34d399;--blue:#818cf8;--text:#e0f2fe;--muted:#94a3b8;--border:#1e3a5f;}
+.theme-emerald{--bg:#022c22;--card:#064e3b;--card2:#065f46;--accent:#34d399;--green:#a7f3d0;--blue:#6ee7b7;--text:#ecfdf5;--muted:#6b7280;--border:#065f46;}
+.theme-purple_night{--bg:#0f0520;--card:#1e0a3c;--card2:#2d1458;--accent:#a855f7;--green:#34d399;--blue:#818cf8;--text:#f5f3ff;--muted:#9ca3af;--border:#2d1458;}
+.theme-light{--bg:#f8fafc;--card:#fff;--card2:#f1f5f9;--accent:#f59e0b;--green:#10b981;--blue:#3b82f6;--red:#ef4444;--purple:#8b5cf6;--text:#1e293b;--muted:#64748b;--border:#e2e8f0;}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:70px;transition:background .3s,color .3s;}
 .topbar{background:var(--card);border-bottom:1px solid var(--border);padding:12px 16px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;}
 .brand{font-size:17px;font-weight:900;color:var(--accent);}
 .logout-btn{background:transparent;border:1px solid var(--border);color:var(--muted);padding:5px 12px;border-radius:8px;cursor:pointer;font-family:inherit;font-size:12px;}
@@ -52,43 +24,46 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-h
 .nb-i{font-size:18px;}
 .page{display:none;padding:14px;}
 .page.active{display:block;}
-
-/* ── HERO ── */
+/* HERO */
 .hero{background:linear-gradient(135deg,var(--card),var(--card2));border-radius:18px;padding:22px 16px;text-align:center;margin-bottom:14px;border:1px solid var(--border);}
 .hero-lbl{font-size:11px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;}
 .hero-amt{font-size:44px;font-weight:900;color:var(--accent);line-height:1;font-variant-numeric:tabular-nums;}
 .hero-unit{font-size:14px;color:var(--muted);}
 .hero-sub{font-size:12px;color:var(--muted);margin-top:6px;}
-
-/* ── زر الإعلان ── */
+/* زر الإعلان */
 .watch-btn{width:100%;padding:16px;border:none;border-radius:14px;background:linear-gradient(135deg,var(--accent),#d97706);color:#000;font-family:inherit;font-size:16px;font-weight:900;cursor:pointer;margin-bottom:14px;box-shadow:0 4px 20px rgba(245,158,11,.3);transition:.15s;}
 .watch-btn:active{transform:scale(.97);}
 .watch-btn:disabled{background:var(--card2);color:var(--muted);box-shadow:none;cursor:not-allowed;}
 .watch-sub{font-size:12px;font-weight:500;opacity:.8;margin-top:3px;}
-
-/* ── إحصائيات ── */
+/* Stats */
 .stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
 .stat{background:var(--card);border-radius:13px;padding:14px;text-align:center;border:1px solid var(--border);}
 .stat-i{font-size:22px;margin-bottom:5px;}
 .stat-v{font-size:20px;font-weight:900;color:var(--green);}
 .stat-l{font-size:11px;color:var(--muted);}
-
-/* ── بطاقات ── */
+/* Cards */
 .card{background:var(--card);border-radius:14px;padding:16px;margin-bottom:14px;border:1px solid var(--border);}
 .card h3{font-size:13px;margin-bottom:10px;}
 .ref-box{display:flex;gap:8px;align-items:center;background:var(--card2);border-radius:9px;padding:9px 12px;}
 .ref-link{flex:1;font-size:11px;color:var(--blue);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .copy-btn{background:var(--blue);color:#fff;border:none;border-radius:7px;padding:7px 12px;font-family:inherit;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;}
-
-/* ── بوتات الربح ── */
+/* Bot cards */
 .bot-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:12px;}
 .bot-top{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
 .bot-icon{width:44px;height:44px;background:linear-gradient(135deg,var(--purple),#5b21b6);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
 .bot-title{font-size:15px;font-weight:800;}
 .bot-msg{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:12px;white-space:pre-wrap;}
 .bot-btn{display:block;width:100%;padding:11px;border:none;border-radius:10px;background:linear-gradient(135deg,#0088cc,#006699);color:#fff;font-family:inherit;font-size:14px;font-weight:800;cursor:pointer;text-align:center;text-decoration:none;}
-
-/* ── السحب ── */
+/* Task cards */
+.task-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:12px;}
+.task-top{display:flex;align-items:center;gap:12px;margin-bottom:8px;}
+.task-icon{width:40px;height:40px;background:linear-gradient(135deg,var(--green),#059669);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+.task-title{font-size:14px;font-weight:800;flex:1;}
+.task-reward{font-size:14px;font-weight:900;color:var(--accent);white-space:nowrap;}
+.task-desc{font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.6;}
+.task-btn{display:block;width:100%;padding:11px;border:none;border-radius:10px;background:linear-gradient(135deg,var(--green),#059669);color:#fff;font-family:inherit;font-size:14px;font-weight:800;cursor:pointer;text-align:center;text-decoration:none;}
+.task-btn.done{background:var(--card2);color:var(--muted);cursor:not-allowed;}
+/* Withdraw */
 .sec-title{font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;}
 .wgrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px;}
 .wopt{border:2px solid var(--border);border-radius:11px;padding:10px 4px;text-align:center;cursor:pointer;background:var(--card2);transition:.15s;}
@@ -99,53 +74,41 @@ label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px;}
 input,select{width:100%;background:var(--card2);border:1px solid var(--border);border-radius:9px;padding:11px 12px;color:var(--text);font-family:inherit;font-size:14px;margin-bottom:12px;outline:none;transition:.2s;}
 input:focus,select:focus{border-color:var(--accent);}
 .sbtn{width:100%;padding:13px;border:none;border-radius:11px;background:linear-gradient(135deg,var(--green),#059669);color:#fff;font-family:inherit;font-size:15px;font-weight:800;cursor:pointer;}
-
-/* ── صندوق العمولة ── */
 .comm-box{background:var(--card2);border-radius:10px;padding:12px 14px;margin-bottom:12px;}
 .cr{display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px;}
 .cr.total{border-top:1px solid var(--border);padding-top:8px;margin-top:5px;font-weight:800;margin-bottom:0;}
-
-/* ── سجل العمليات ── */
+/* Tx */
 .tx-list{display:flex;flex-direction:column;gap:8px;}
 .tx{background:var(--card);border-radius:11px;padding:11px 14px;display:flex;justify-content:space-between;align-items:center;border:1px solid var(--border);}
 .tx-l{display:flex;align-items:center;gap:9px;}
 .tx-d{font-size:13px;font-weight:600;}
 .tx-dt{font-size:11px;color:var(--muted);}
 .tx-a{font-size:14px;font-weight:800;font-variant-numeric:tabular-nums;}
-.pos{color:var(--green);}
-.neg{color:var(--red);}
+.pos{color:var(--green);}.neg{color:var(--red);}
 .badge{display:inline-block;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:700;}
 .badge.pending{background:rgba(245,158,11,.2);color:var(--accent);}
 .badge.approved{background:rgba(16,185,129,.2);color:var(--green);}
 .badge.rejected{background:rgba(239,68,68,.2);color:var(--red);}
 .witem{background:var(--card);border-radius:11px;padding:11px 14px;margin-bottom:8px;border:1px solid var(--border);}
 .wrow{display:flex;justify-content:space-between;align-items:center;}
-
-/* ── إشعار ── */
+/* Toast */
 .toast{position:fixed;bottom:82px;left:50%;transform:translateX(-50%) translateY(16px);background:var(--card);border:1px solid var(--border);border-radius:11px;padding:11px 18px;font-size:13px;font-weight:600;z-index:999;opacity:0;transition:.25s;pointer-events:none;white-space:nowrap;max-width:90vw;}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 .toast.success{border-color:var(--green);color:var(--green);}
 .toast.error{border-color:var(--red);color:var(--red);}
-
-/* ── Spinner ── */
 .spin{display:inline-block;width:15px;height:15px;border:2px solid rgba(0,0,0,.3);border-top-color:#000;border-radius:50%;animation:sp .6s linear infinite;vertical-align:middle;}
 @keyframes sp{to{transform:rotate(360deg);}}
 .empty{text-align:center;padding:24px;color:var(--muted);font-size:13px;}
-
-/* ── Modal Overlay ── */
+/* Modals */
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;}
 .modal{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:24px;width:100%;max-width:340px;text-align:center;}
 .modal h3{font-size:18px;font-weight:900;margin-bottom:8px;}
 .modal p{font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.6;}
-
-/* ── Captcha ── */
 .captcha-box{background:var(--card2);border-radius:12px;padding:20px;margin-bottom:16px;}
-.captcha-q{font-size:24px;font-weight:900;color:var(--accent);letter-spacing:4px;margin-bottom:12px;}
-.captcha-input{width:100%;background:var(--bg);border:2px solid var(--border);border-radius:10px;padding:12px;color:var(--text);font-family:inherit;font-size:20px;text-align:center;font-weight:800;outline:none;letter-spacing:4px;}
+.captcha-q{font-size:28px;font-weight:900;color:var(--accent);letter-spacing:4px;margin-bottom:12px;}
+.captcha-input{width:100%;background:var(--bg);border:2px solid var(--border);border-radius:10px;padding:12px;color:var(--text);font-family:inherit;font-size:22px;text-align:center;font-weight:800;outline:none;letter-spacing:4px;margin-bottom:0;}
 .captcha-input:focus{border-color:var(--accent);}
-.captcha-btn{width:100%;padding:13px;border:none;border-radius:11px;background:var(--accent);color:#000;font-family:inherit;font-size:15px;font-weight:900;cursor:pointer;}
-
-/* ── Welcome Message ── */
+.captcha-btn{width:100%;padding:13px;border:none;border-radius:11px;background:var(--accent);color:#000;font-family:inherit;font-size:15px;font-weight:900;cursor:pointer;margin-top:14px;}
 .welcome-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:300;display:flex;align-items:center;justify-content:center;padding:20px;}
 .welcome-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px;width:100%;max-width:360px;text-align:center;}
 .welcome-icon{font-size:48px;margin-bottom:12px;}
@@ -155,7 +118,6 @@ input:focus,select:focus{border-color:var(--accent);}
 </head>
 <body>
 
-<!-- ══ شريط علوي ══ -->
 <div class="topbar">
   <div class="brand">⚡ Reward Ads</div>
   <div style="display:flex;align-items:center;gap:8px">
@@ -164,7 +126,7 @@ input:focus,select:focus{border-color:var(--accent);}
   </div>
 </div>
 
-<!-- ══ الرئيسية ══ -->
+<!-- HOME -->
 <div class="page active" id="page-home">
   <div class="hero">
     <div class="hero-lbl">رصيدك الحالي</div>
@@ -174,32 +136,28 @@ input:focus,select:focus{border-color:var(--accent);}
     </div>
     <div class="hero-sub" id="earned-sub">إجمالي المكتسب: 0.00000 ج.م</div>
   </div>
-
   <button class="watch-btn" id="watch-btn" onclick="watchAd()">
     <div id="btn-text">📺 شاهد إعلان واكسب</div>
     <div class="watch-sub" id="btn-sub">المكافأة: 0.50000 ج.م</div>
   </button>
-
   <div class="stats">
     <div class="stat"><div class="stat-i">👥</div><div class="stat-v" id="rc">0</div><div class="stat-l">الإحالات</div></div>
     <div class="stat"><div class="stat-i">📺</div><div class="stat-v" id="ads-today">0/100</div><div class="stat-l">إعلانات اليوم</div></div>
   </div>
-
   <div class="card">
-    <h3>🔗 رابط الإحالة الخاص بك</h3>
+    <h3>🔗 رابط الإحالة</h3>
     <div class="ref-box">
       <span class="ref-link" id="rl-home">جارٍ التحميل...</span>
       <button class="copy-btn" onclick="copyRef()">نسخ</button>
     </div>
   </div>
-
   <div style="display:flex;justify-content:center;margin-top:6px">
     <script>atOptions={'key':'fc81e16a4944e7d285538116a1a35cb9','format':'iframe','height':50,'width':320,'params':{}};</script>
     <script src="https://disintegratehesitate.com/fc81e16a4944e7d285538116a1a35cb9/invoke.js"></script>
   </div>
 </div>
 
-<!-- ══ الإحالات ══ -->
+<!-- REFERRAL -->
 <div class="page" id="page-ref">
   <div class="hero" style="margin-bottom:14px">
     <div class="hero-lbl">أشخاص دعوتهم</div>
@@ -224,17 +182,27 @@ input:focus,select:focus{border-color:var(--accent);}
   </div>
 </div>
 
-<!-- ══ بوتات الربح ══ -->
+<!-- TASKS -->
+<div class="page" id="page-tasks">
+  <div style="text-align:center;padding:16px 0 12px">
+    <div style="font-size:36px">✅</div>
+    <div style="font-size:16px;font-weight:900;margin-top:6px">مهام الربح</div>
+    <div style="font-size:12px;color:var(--muted);margin-top:4px">أكمل المهام واكسب مكافآت فورية</div>
+  </div>
+  <div id="tasks-list"><div class="empty">⏳ جارٍ التحميل...</div></div>
+</div>
+
+<!-- BOTS -->
 <div class="page" id="page-bots">
   <div style="text-align:center;padding:16px 0 12px">
     <div style="font-size:36px">🤖</div>
-    <div style="font-size:16px;font-weight:900;margin-top:6px">بوتات الربح المميزة</div>
+    <div style="font-size:16px;font-weight:900;margin-top:6px">بوتات الربح</div>
     <div style="font-size:12px;color:var(--muted);margin-top:4px">بوتات موثوقة للربح من الإنترنت</div>
   </div>
   <div id="bots-list"><div class="empty">⏳ جارٍ التحميل...</div></div>
 </div>
 
-<!-- ══ السحب ══ -->
+<!-- WITHDRAW -->
 <div class="page" id="page-withdraw">
   <div class="card">
     <div class="sec-title">اختر طريقة الدفع</div>
@@ -247,49 +215,38 @@ input:focus,select:focus{border-color:var(--accent);}
       <div class="wopt" onclick="selWallet('Ethereum ERC20',this)"><div class="wi">🔷</div><div class="wn">ETH</div></div>
       <div class="wopt" onclick="selWallet('USDT',this)"><div class="wi">💚</div><div class="wn">USDT</div></div>
     </div>
-
-    <!-- شبكة USDT — تظهر فقط عند اختيار USDT -->
-    <div id="usdt-network-field" style="display:none;margin-bottom:12px">
-      <label>اختر شبكة USDT</label>
-      <select id="usdt-network" onchange="onUsdtNetChange()"></select>
+    <div id="usdt-net-wrap" style="display:none;margin-bottom:12px">
+      <label>شبكة USDT</label>
+      <select id="usdt-net" onchange="onUsdtChange()"></select>
     </div>
-
-    <!-- حقل المحفظة — يتغير حسب الطريقة -->
-    <div id="wallet-field">
-      <label id="wallet-label">رقم المحفظة</label>
-      <input type="tel" id="w-number" placeholder="01xxxxxxxxx" maxlength="15">
-    </div>
-
+    <label id="wallet-label">رقم المحفظة</label>
+    <input type="tel" id="w-number" placeholder="01xxxxxxxxx" maxlength="15">
     <label>المبلغ المطلوب</label>
-    <input type="number" id="w-amount" placeholder="الحد الأدنى: 5 ج.م" min="1" step="0.00001" oninput="calcCommission()">
-
+    <input type="number" id="w-amount" placeholder="الحد الأدنى: 5 ج.م" min="1" step="0.00001" oninput="calcFee()">
     <div class="comm-box">
-      <div class="cr"><span style="color:var(--muted)">المبلغ المطلوب:</span><span id="c-amount">0.00000</span></div>
-      <div class="cr"><span style="color:var(--muted)">رسوم الخدمة:</span><span style="color:var(--red)" id="c-comm">0.00000</span></div>
+      <div class="cr"><span style="color:var(--muted)">المبلغ:</span><span id="c-amount">0.00000</span></div>
+      <div class="cr"><span style="color:var(--muted)">الرسوم:</span><span style="color:var(--red)" id="c-fee">0.00000</span></div>
       <div class="cr total"><span>إجمالي الخصم:</span><span style="color:var(--accent)" id="c-total">0.00000</span></div>
     </div>
-
     <div style="display:flex;justify-content:space-between;margin-bottom:12px">
-      <span style="font-size:12px;color:var(--muted)">رصيدك المتاح:</span>
+      <span style="font-size:12px;color:var(--muted)">رصيدك:</span>
       <span style="font-size:14px;font-weight:800;color:var(--accent)" id="avail">0.00000 ج.م</span>
     </div>
     <button class="sbtn" onclick="doWithdraw()">💸 طلب السحب</button>
   </div>
-
   <div class="sec-title">طلبات السحب السابقة</div>
   <div id="w-hist"><div class="empty">لا توجد طلبات بعد</div></div>
 </div>
 
-<!-- ══ السجل ══ -->
+<!-- HISTORY -->
 <div class="page" id="page-hist">
   <div class="sec-title">سجل العمليات</div>
   <div class="tx-list" id="tx-list"><div class="empty">لا توجد عمليات بعد</div></div>
 </div>
 
-<!-- ── تنقل سفلي ── -->
 <nav class="botnav">
   <button class="nb active" onclick="goPage('home')"     id="nav-home">    <span class="nb-i">🏠</span>الرئيسية</button>
-  <button class="nb"        onclick="goPage('ref')"      id="nav-ref">     <span class="nb-i">👥</span>الإحالات</button>
+  <button class="nb"        onclick="goPage('tasks')"    id="nav-tasks">   <span class="nb-i">✅</span>مهام</button>
   <button class="nb"        onclick="goPage('bots')"     id="nav-bots">    <span class="nb-i">🤖</span>بوتات</button>
   <button class="nb"        onclick="goPage('withdraw')" id="nav-withdraw"><span class="nb-i">💳</span>السحب</button>
   <button class="nb"        onclick="goPage('hist')"     id="nav-hist">    <span class="nb-i">📜</span>السجل</button>
@@ -297,20 +254,20 @@ input:focus,select:focus{border-color:var(--accent);}
 
 <div class="toast" id="toast"></div>
 
-<!-- ══ Captcha Modal ══ -->
-<div class="overlay" id="captcha-overlay" style="display:none">
+<!-- Captcha Modal -->
+<div class="overlay" id="cap-overlay" style="display:none">
   <div class="modal">
     <h3>🤖 تحقق بشري</h3>
-    <p>أثبت أنك لست روبوت<br>أجب على السؤال التالي:</p>
+    <p>أثبت أنك لست روبوتاً<br>أجب على السؤال التالي</p>
     <div class="captcha-box">
-      <div class="captcha-q" id="captcha-q">3 + 5 = ?</div>
-      <input class="captcha-input" type="number" id="captcha-ans" placeholder="الإجابة">
+      <div class="captcha-q" id="cap-q">3 + 5 = ?</div>
+      <input class="captcha-input" type="number" id="cap-ans" placeholder="؟">
     </div>
     <button class="captcha-btn" onclick="submitCaptcha()">✅ تأكيد</button>
   </div>
 </div>
 
-<!-- ══ Welcome Message Modal ══ -->
+<!-- Welcome Modal -->
 <div class="welcome-overlay" id="welcome-overlay" style="display:none">
   <div class="welcome-card">
     <div class="welcome-icon">👋</div>
@@ -323,32 +280,28 @@ input:focus,select:focus{border-color:var(--accent);}
 <script src="https://disintegratehesitate.com/29/75/d4/2975d4821903bf0e219f9c1db479d063.js"></script>
 <script async="async" data-cfasync="false" src="https://disintegratehesitate.com/7ad8799002e11197fc49cf8d0d1dc55a/invoke.js"></script>
 <div id="container-7ad8799002e11197fc49cf8d0d1dc55a"></div>
+<script src="https://disintegratehesitate.com/5b/ad/5d/5bad5d31b65e8fb591b62c84431245af.js"></script>
 
 <script>
 const TOKEN = localStorage.getItem('rw_token');
 if(!TOKEN) location.replace('/');
 
-let user     = JSON.parse(localStorage.getItem('rw_user')     || '{}');
-let sett     = JSON.parse(localStorage.getItem('rw_settings') || '{}');
-let wallet   = 'Vodafone Cash';
-let cdTimer  = null;
-let adTimer  = null;
-let captchaExpected = '';
-let pendingAdToken  = null;
+let user    = JSON.parse(localStorage.getItem('rw_user')     || '{}');
+let sett    = JSON.parse(localStorage.getItem('rw_settings') || '{}');
+let wallet  = 'Vodafone Cash';
+let cdTimer = null, adTimer = null;
+let capExp  = '';
+let usdtNets = ['TRC20'];
+let usdtNet  = 'TRC20';
 
-// ── Wallet config ────────────────────────────────────────────
-const WALLET_CONFIG = {
-  'Vodafone Cash':  { icon:'🔴', label:'رقم المحفظة',            ph:'01xxxxxxxxx',                 type:'tel',  min_key:'min_vodafone',  fee_key:'fee_vodafone'  },
-  'Etisalat Cash':  { icon:'🟢', label:'رقم المحفظة',            ph:'01xxxxxxxxx',                 type:'tel',  min_key:'min_etisalat',  fee_key:'fee_etisalat'  },
-  'Orange Cash':    { icon:'🟠', label:'رقم المحفظة',            ph:'01xxxxxxxxx',                 type:'tel',  min_key:'min_orange',    fee_key:'fee_orange'    },
-  'WE Pay':         { icon:'🔵', label:'رقم المحفظة',            ph:'01xxxxxxxxx',                 type:'tel',  min_key:'min_we',        fee_key:'fee_we'        },
-  'Binance':        { icon:'🟡', label:'Binance Pay ID',          ph:'أدخل Binance ID الخاص بك',  type:'text', min_key:'min_binance',   fee_key:'fee_binance'   },
-  'Ethereum ERC20': { icon:'🔷', label:'عنوان المحفظة (ERC20)',  ph:'0x...',                       type:'text', min_key:'min_ethereum',  fee_key:'fee_ethereum'  },
+const WKEYS = {
+  'Vodafone Cash':  {label:'رقم المحفظة',          ph:'01xxxxxxxxx',          type:'tel',  mk:'min_vodafone', fk:'fee_vodafone'},
+  'Etisalat Cash':  {label:'رقم المحفظة',          ph:'01xxxxxxxxx',          type:'tel',  mk:'min_etisalat', fk:'fee_etisalat'},
+  'Orange Cash':    {label:'رقم المحفظة',          ph:'01xxxxxxxxx',          type:'tel',  mk:'min_orange',   fk:'fee_orange'},
+  'WE Pay':         {label:'رقم المحفظة',          ph:'01xxxxxxxxx',          type:'tel',  mk:'min_we',       fk:'fee_we'},
+  'Binance':        {label:'Binance Pay ID',       ph:'أدخل Binance ID',      type:'text', mk:'min_binance',  fk:'fee_binance'},
+  'Ethereum ERC20': {label:'عنوان المحفظة (ERC20)',ph:'0x...',                type:'text', mk:'min_ethereum', fk:'fee_ethereum'},
 };
-
-// شبكات USDT — تُجلب من السيرفر
-let usdtNetworks = ['TRC20'];
-let activeUsdtNet = 'TRC20';
 
 // ── API ──────────────────────────────────────────────────────
 async function api(url, body=null){
@@ -363,29 +316,24 @@ async function api(url, body=null){
   }catch(e){return{error:'خطأ في الاتصال'};}
 }
 
-// ── INIT ────────────────────────────────────────────────────
+// ── INIT ─────────────────────────────────────────────────────
 (async()=>{
   renderUI();
   resumeAdIfNeeded();
-
-  // جلب إعدادات الموقع (ثيم + رسالة ترحيب)
-  // جلب شبكات USDT
-  const netsData = await api('/api/usdt_networks');
-  if(netsData.networks?.length){
-    usdtNetworks  = netsData.networks;
-    activeUsdtNet = netsData.default || netsData.networks[0];
-  }
-
+  // ثيم + رسالة ترحيب
   const cfg = await api('/api/site_config');
   if(cfg.active_theme) applyTheme(cfg.active_theme);
   if(cfg.welcome_active && cfg.welcome_message && !sessionStorage.getItem('welcomed')){
     showWelcome(cfg.welcome_message);
   }
-
+  // شبكات USDT
+  const nd = await api('/api/usdt_networks');
+  if(nd.networks?.length){ usdtNets=nd.networks; usdtNet=nd.default||nd.networks[0]; }
+  // بيانات المستخدم
   const d = await api('/api/me');
   if(!d.success) return;
-  user = d.user; sett = d.settings;
-  localStorage.setItem('rw_user',    JSON.stringify(user));
+  user=d.user; sett=d.settings;
+  localStorage.setItem('rw_user',JSON.stringify(user));
   localStorage.setItem('rw_settings',JSON.stringify(sett));
   renderUI();
   const cd = d.ad_status?.remaining_cooldown||0;
@@ -393,23 +341,21 @@ async function api(url, body=null){
 })();
 
 // ── Theme ────────────────────────────────────────────────────
-function applyTheme(theme){
-  document.body.className = theme==='dark_gold'?'':('theme-'+theme);
+function applyTheme(t){
+  document.body.className = t==='dark_gold'?'':('theme-'+t);
 }
-
-// ── Welcome ──────────────────────────────────────────────────
 function showWelcome(msg){
-  document.getElementById('welcome-msg').textContent = msg;
-  document.getElementById('welcome-overlay').style.display = 'flex';
+  document.getElementById('welcome-msg').textContent=msg;
+  document.getElementById('welcome-overlay').style.display='flex';
 }
 function closeWelcome(){
-  document.getElementById('welcome-overlay').style.display = 'none';
+  document.getElementById('welcome-overlay').style.display='none';
   sessionStorage.setItem('welcomed','1');
 }
 
 // ── UI ───────────────────────────────────────────────────────
 function fmt(n){return parseFloat(n||0).toFixed(5);}
-function buildRefLink(){return 'https://t.me/medo_add_bot?start=ref_'+(user.user_id||'');}
+function refLink(){return 'https://t.me/medo_add_bot?start=ref_'+(user.user_id||'');}
 
 function renderUI(){
   document.getElementById('top-user').textContent   = user.first_name||user.username||'';
@@ -420,12 +366,12 @@ function renderUI(){
   document.getElementById('avail').textContent      = fmt(user.balance)+' ج.م';
   const max=sett.max_ads_per_day||100, today=user.ads_today||0;
   document.getElementById('ads-today').textContent  = today+'/'+max;
-  const link = buildRefLink();
-  document.getElementById('rl-home').textContent = link;
-  document.getElementById('rl-ref').textContent  = link;
-  const wamt = document.getElementById('w-amount');
-  if(wamt) updateWalletField();
-  calcCommission();
+  const lnk = refLink();
+  document.getElementById('rl-home').textContent = lnk;
+  document.getElementById('rl-ref').textContent  = lnk;
+  const wa = document.getElementById('w-amount');
+  if(wa){ const mk = getMinKey(); wa.placeholder='الحد الأدنى: '+fmt(sett[mk]||5)+' ج.م'; }
+  calcFee();
 }
 
 function setBtnReady(){
@@ -442,167 +388,180 @@ function setBtnReady(){
   document.getElementById('btn-sub').textContent='المكافأة: '+fmt(sett.reward_per_ad||0.5)+' ج.م — '+today+'/'+max;
 }
 
-function showCooldown(seconds){
+function showCooldown(sec){
   clearInterval(cdTimer);
-  const btn=document.getElementById('watch-btn');
-  btn.disabled=true;
-  let sec=Math.ceil(seconds);
+  document.getElementById('watch-btn').disabled=true;
+  let s=Math.ceil(sec);
   const tick=()=>{
-    if(sec<=0){clearInterval(cdTimer);setBtnReady();return;}
+    if(s<=0){clearInterval(cdTimer);setBtnReady();return;}
     document.getElementById('btn-text').textContent='⏳ انتظر قبل الإعلان التالي';
-    document.getElementById('btn-sub').textContent=sec+' ثانية';
-    sec--;
+    document.getElementById('btn-sub').textContent=s+' ثانية';
+    s--;
   };
   tick(); cdTimer=setInterval(tick,1000);
 }
 
-// ══ مشاهدة الإعلان ══════════════════════════════════════════
+// ── مشاهدة الإعلان ───────────────────────────────────────────
 async function watchAd(){
   const btn=document.getElementById('watch-btn');
   if(btn.disabled) return;
   btn.disabled=true;
-
-  // فتح الـ Smartlink كإعلان
   try{ window.open('https://disintegratehesitate.com/tacznwi1?key=7df3575307b4b03ba008a6c6ad703312','_blank'); }catch(e){}
-
   document.getElementById('btn-text').textContent='⏳ جارٍ تجهيز الإعلان...';
   document.getElementById('btn-sub').textContent='';
-
   const td = await api('/api/ad_token',{});
   if(td.error){
     showToast(td.error,'error');
-    td.wait ? showCooldown(td.wait) : setBtnReady();
+    td.wait?showCooldown(td.wait):setBtnReady();
     return;
   }
-
-  const token    = td.token;
-  const duration = td.duration||sett.cooldown_seconds||20;
-
-  // حفظ في localStorage
-  localStorage.setItem('rw_ad_token',    token);
-  localStorage.setItem('rw_ad_start',    Date.now().toString());
-  localStorage.setItem('rw_ad_duration', duration.toString());
-
-  // عداد
-  let sec=duration;
-  clearInterval(adTimer);
+  const token=td.token, dur=td.duration||sett.cooldown_seconds||20;
+  localStorage.setItem('rw_ad_token',token);
+  localStorage.setItem('rw_ad_start',Date.now().toString());
+  localStorage.setItem('rw_ad_dur',dur.toString());
+  let s=dur; clearInterval(adTimer);
   const tick=()=>{
-    if(sec<=0){clearInterval(adTimer);finishAd(token);return;}
+    if(s<=0){clearInterval(adTimer);sendReward(token);return;}
     document.getElementById('btn-text').innerHTML='<span class="spin"></span> جارٍ التحقق من الإعلان...';
-    document.getElementById('btn-sub').textContent='انتظر '+sec+' ثانية';
-    sec--;
+    document.getElementById('btn-sub').textContent='انتظر '+s+' ثانية';
+    s--;
   };
   tick(); adTimer=setInterval(tick,1000);
 }
 
-// ── استئناف لو طلع وراجع ─────────────────────────────────────
+// ── استئناف العداد لو طلع ────────────────────────────────────
 function resumeAdIfNeeded(){
   const start=parseInt(localStorage.getItem('rw_ad_start')||'0');
-  const dur  =parseInt(localStorage.getItem('rw_ad_duration')||'0');
+  const dur  =parseInt(localStorage.getItem('rw_ad_dur')||'0');
   const tok  =localStorage.getItem('rw_ad_token');
   if(!start||!dur||!tok) return;
-  const elapsed=( Date.now()-start)/1000;
-  const remaining=dur-elapsed;
-  if(remaining>0){
-    // لسه في وقت — اعرض تنبيه وعداد
-    showToast('⚠️ لم يتم احتساب الإعلان — يرجى انتظار الوقت داخل الإعلان','error');
-    const btn=document.getElementById('watch-btn');
-    btn.disabled=true;
-    let sec=Math.ceil(remaining);
-    clearInterval(adTimer);
+  const elapsed=(Date.now()-start)/1000;
+  const rem=dur-elapsed;
+  if(rem>2){
+    // ── لسه في وقت — اعرض تحذير وأكمل العداد ─────────────
+    showToast('⚠️ لم يتم احتساب الإعلان — انتظر حتى ينتهي العداد','error');
+    document.getElementById('watch-btn').disabled=true;
+    let s=Math.ceil(rem); clearInterval(adTimer);
     const tick=()=>{
-      if(sec<=0){clearInterval(adTimer);finishAd(tok);return;}
-      document.getElementById('btn-text').innerHTML='<span class="spin"></span> جارٍ التحقق من الإعلان...';
-      document.getElementById('btn-sub').textContent='انتظر '+sec+' ثانية';
-      sec--;
+      if(s<=0){clearInterval(adTimer);sendReward(tok);return;}
+      document.getElementById('btn-text').innerHTML='<span class="spin"></span> أكمل انتظار الإعلان...';
+      document.getElementById('btn-sub').textContent='⏳ '+s+' ثانية متبقية';
+      s--;
     };
     tick(); adTimer=setInterval(tick,1000);
   } else {
-    finishAd(tok);
+    // ── الوقت خلص وهو برّا — ابعت للسيرفر ─────────────────
+    sendReward(tok);
   }
 }
 
-// ── إنهاء الإعلان ─────────────────────────────────────────────
-async function finishAd(token){
+async function sendReward(token){
   clearInterval(adTimer);
   document.getElementById('btn-text').textContent='⏳ جارٍ إضافة المكافأة...';
   document.getElementById('btn-sub').textContent='';
-
   const d=await api('/api/watch_ad',{token});
-
   localStorage.removeItem('rw_ad_token');
   localStorage.removeItem('rw_ad_start');
-  localStorage.removeItem('rw_ad_duration');
-
+  localStorage.removeItem('rw_ad_dur');
   if(d.success){
-    user.balance      = d.new_balance;
-    user.total_earned = (user.total_earned||0)+d.reward;
-    user.ads_today    = d.ads_today;
+    user.balance=(d.new_balance);
+    user.total_earned=(user.total_earned||0)+d.reward;
+    user.ads_today=d.ads_today;
     localStorage.setItem('rw_user',JSON.stringify(user));
     renderUI();
     showToast('✅ تمت إضافة '+fmt(d.reward)+' ج.م لرصيدك!','success');
-
-    // هل نعرض الـ captcha؟
-    if(d.need_captcha){
-      setTimeout(()=>showCaptcha(),500);
-    } else {
-      showCooldown(sett.cooldown_seconds||20);
-    }
+    if(d.need_captcha) setTimeout(showCaptcha,600);
+    else showCooldown(sett.cooldown_seconds||20);
   } else {
     showToast(d.error||'حدث خطأ','error');
     setBtnReady();
   }
 }
 
-// ══ Captcha ══════════════════════════════════════════════════
+// ── Captcha ──────────────────────────────────────────────────
 function showCaptcha(){
-  // توليد سؤال عشوائي
   const ops=['+','-','×'];
-  const op=ops[Math.floor(Math.random()*ops.length)];
+  const op=ops[Math.floor(Math.random()*3)];
   let a,b,ans;
   if(op==='+'){a=Math.floor(Math.random()*20)+1;b=Math.floor(Math.random()*20)+1;ans=a+b;}
   else if(op==='-'){a=Math.floor(Math.random()*20)+10;b=Math.floor(Math.random()*a)+1;ans=a-b;}
-  else{a=Math.floor(Math.random()*10)+1;b=Math.floor(Math.random()*10)+1;ans=a*b;}
-
-  captchaExpected = String(ans);
-  document.getElementById('captcha-q').textContent=`${a} ${op} ${b} = ?`;
-  document.getElementById('captcha-ans').value='';
-  document.getElementById('captcha-overlay').style.display='flex';
-  setTimeout(()=>document.getElementById('captcha-ans').focus(),100);
+  else{a=Math.floor(Math.random()*9)+1;b=Math.floor(Math.random()*9)+1;ans=a*b;}
+  capExp=String(ans);
+  document.getElementById('cap-q').textContent=`${a} ${op} ${b} = ?`;
+  document.getElementById('cap-ans').value='';
+  document.getElementById('cap-overlay').style.display='flex';
+  setTimeout(()=>document.getElementById('cap-ans').focus(),100);
 }
-
 async function submitCaptcha(){
-  const ans=document.getElementById('captcha-ans').value.trim();
+  const ans=document.getElementById('cap-ans').value.trim();
   if(!ans){showToast('أدخل الإجابة','error');return;}
-  const d=await api('/api/verify_captcha',{answer:ans,expected:captchaExpected});
+  const d=await api('/api/verify_captcha',{answer:ans,expected:capExp});
   if(d.success){
-    document.getElementById('captcha-overlay').style.display='none';
-    showToast('✅ تم التحقق بنجاح','success');
+    document.getElementById('cap-overlay').style.display='none';
+    showToast('✅ تم التحقق','success');
     showCooldown(sett.cooldown_seconds||20);
   } else {
-    showToast(d.error||'إجابة خاطئة','error');
-    document.getElementById('captcha-ans').value='';
-    // تغيير السؤال
+    showToast('إجابة خاطئة','error');
+    document.getElementById('cap-ans').value='';
     showCaptcha();
   }
 }
+document.getElementById('cap-ans').addEventListener('keydown',e=>{if(e.key==='Enter')submitCaptcha();});
 
-document.getElementById('captcha-ans').addEventListener('keydown',e=>{
-  if(e.key==='Enter') submitCaptcha();
-});
-
-// ══ التنقل ═══════════════════════════════════════════════════
+// ── التنقل ───────────────────────────────────────────────────
 function goPage(name){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active'));
   document.getElementById('page-'+name).classList.add('active');
   document.getElementById('nav-'+name).classList.add('active');
-  if(name==='hist')     loadTransactions();
-  if(name==='withdraw') loadWithdrawals();
+  if(name==='hist')     loadTx();
+  if(name==='withdraw') loadWHist();
   if(name==='bots')     loadBots();
+  if(name==='tasks')    loadTasks();
 }
 
-// ══ بوتات الربح ══════════════════════════════════════════════
+// ── المهام ───────────────────────────────────────────────────
+async function loadTasks(){
+  const el=document.getElementById('tasks-list');
+  el.innerHTML='<div class="empty">⏳ جارٍ التحميل...</div>';
+  const d=await api('/api/tasks');
+  if(!d.tasks?.length){el.innerHTML='<div class="empty">✅ لا توجد مهام متاحة حالياً</div>';return;}
+  el.innerHTML=d.tasks.map(t=>`
+    <div class="task-card">
+      <div class="task-top">
+        <div class="task-icon">🎯</div>
+        <div class="task-title">${t.title}</div>
+        <div class="task-reward">+${fmt(t.reward)} ج.م</div>
+      </div>
+      ${t.description?`<div class="task-desc">${t.description}</div>`:''}
+      <a class="task-btn" href="${t.link}" target="_blank" onclick="markTask(${t.id},this)">
+        🚀 ابدأ المهمة
+      </a>
+    </div>`).join('');
+}
+
+async function markTask(taskId, el){
+  // انتظر ثانيتين عشان يفتح الرابط
+  setTimeout(async()=>{
+    el.textContent='⏳ جارٍ التحقق...';
+    el.className='task-btn done';
+    const d=await api('/api/tasks/complete',{task_id:taskId});
+    if(d.success){
+      user.balance=d.new_balance;
+      user.total_earned=(user.total_earned||0)+d.reward;
+      localStorage.setItem('rw_user',JSON.stringify(user));
+      renderUI();
+      showToast('✅ تمت المهمة! + '+fmt(d.reward)+' ج.م','success');
+      el.textContent='✅ تم';
+    } else {
+      showToast(d.error||'حدث خطأ','error');
+      el.textContent='🚀 ابدأ المهمة';
+      el.className='task-btn';
+    }
+  },2000);
+}
+
+// ── البوتات ──────────────────────────────────────────────────
 async function loadBots(){
   const el=document.getElementById('bots-list');
   el.innerHTML='<div class="empty">⏳ جارٍ التحميل...</div>';
@@ -616,102 +575,85 @@ async function loadBots(){
     </div>`).join('');
 }
 
-// ══ السحب ════════════════════════════════════════════════════
+// ── السحب ────────────────────────────────────────────────────
+function getMinKey(){
+  if(wallet.startsWith('USDT')) return 'min_usdt';
+  return (WKEYS[wallet]||WKEYS['Vodafone Cash']).mk;
+}
+function getFeeKey(){
+  if(wallet.startsWith('USDT')) return 'fee_usdt';
+  return (WKEYS[wallet]||WKEYS['Vodafone Cash']).fk;
+}
+
 function selWallet(name,el){
-  wallet = name==='USDT' ? ('USDT '+activeUsdtNet) : name;
+  wallet = name==='USDT'?('USDT '+usdtNet):name;
   document.querySelectorAll('.wopt').forEach(e=>e.classList.remove('sel'));
   el.classList.add('sel');
-  // إظهار/إخفاء شبكة USDT
-  const usdtField = document.getElementById('usdt-network-field');
+  const usdtWrap=document.getElementById('usdt-net-wrap');
   if(name==='USDT'){
-    usdtField.style.display='block';
+    usdtWrap.style.display='block';
     buildUsdtSelect();
   } else {
-    usdtField.style.display='none';
+    usdtWrap.style.display='none';
   }
-  updateWalletField();
-  calcCommission();
+  updateWalletInput();
+  calcFee();
 }
 
 function buildUsdtSelect(){
-  const sel = document.getElementById('usdt-network');
-  sel.innerHTML = usdtNetworks.map(n=>
-    `<option value="${n}" ${n===activeUsdtNet?'selected':''}>${n}</option>`
-  ).join('');
+  const sel=document.getElementById('usdt-net');
+  sel.innerHTML=usdtNets.map(n=>`<option value="${n}" ${n===usdtNet?'selected':''}>${n}</option>`).join('');
 }
-
-function onUsdtNetChange(){
-  activeUsdtNet = document.getElementById('usdt-network').value;
-  wallet = 'USDT '+activeUsdtNet;
-  updateWalletField();
-  calcCommission();
+function onUsdtChange(){
+  usdtNet=document.getElementById('usdt-net').value;
+  wallet='USDT '+usdtNet;
+  updateWalletInput();
 }
-
-function updateWalletField(){
+function updateWalletInput(){
   let cfg;
   if(wallet.startsWith('USDT')){
-    const net = wallet.split(' ')[1]||'TRC20';
-    cfg = {
-      label: `عنوان محفظة USDT (${net})`,
-      ph:    `أدخل عنوان المحفظة (${net})`,
-      type:  'text',
-      min_key: 'min_usdt',
-      fee_key: 'fee_usdt'
-    };
+    const net=wallet.split(' ')[1]||'TRC20';
+    cfg={label:`عنوان محفظة USDT (${net})`,ph:`عنوان المحفظة (${net})`,type:'text'};
   } else {
-    cfg = WALLET_CONFIG[wallet]||WALLET_CONFIG['Vodafone Cash'];
+    cfg=WKEYS[wallet]||WKEYS['Vodafone Cash'];
   }
-  document.getElementById('wallet-label').textContent = cfg.label;
+  document.getElementById('wallet-label').textContent=cfg.label;
   const inp=document.getElementById('w-number');
-  inp.placeholder=cfg.ph;
-  inp.type=cfg.type;
-  inp.maxLength = cfg.type==='tel' ? 11 : 200;
+  inp.placeholder=cfg.ph; inp.type=cfg.type; inp.maxLength=cfg.type==='tel'?11:200;
 }
-
-function calcCommission(){
-  let min_key, fee_key;
-  if(wallet.startsWith('USDT')){
-    min_key='min_usdt'; fee_key='fee_usdt';
-  } else {
-    const cfg = WALLET_CONFIG[wallet]||WALLET_CONFIG['Vodafone Cash'];
-    min_key=cfg.min_key; fee_key=cfg.fee_key;
-  }
-  const amount = parseFloat(document.getElementById('w-amount')?.value||0)||0;
-  const comm   = parseFloat(sett[fee_key]||sett.withdrawal_commission||1);
-  const minW   = parseFloat(sett[min_key]||sett.min_withdraw||5);
-  document.getElementById('c-amount').textContent = fmt(amount)+' ج.م';
-  document.getElementById('c-comm').textContent   = fmt(comm)+' ج.م';
-  document.getElementById('c-total').textContent  = fmt(amount+comm)+' ج.م';
-  // تحديث placeholder
-  const wamt=document.getElementById('w-amount');
-  if(wamt) wamt.placeholder='الحد الأدنى: '+fmt(minW)+' ج.م';
+function calcFee(){
+  const amount=parseFloat(document.getElementById('w-amount')?.value||0)||0;
+  const fee   =parseFloat(sett[getFeeKey()]??sett.withdrawal_commission??1);
+  const minW  =parseFloat(sett[getMinKey()]??sett.min_withdraw??5);
+  document.getElementById('c-amount').textContent=fmt(amount)+' ج.م';
+  document.getElementById('c-fee').textContent   =fmt(fee)+' ج.م';
+  document.getElementById('c-total').textContent =fmt(amount+fee)+' ج.م';
+  const wa=document.getElementById('w-amount');
+  if(wa) wa.placeholder='الحد الأدنى: '+fmt(minW)+' ج.م';
 }
-
 async function doWithdraw(){
   const number=document.getElementById('w-number').value.trim();
   const amount=parseFloat(document.getElementById('w-amount').value);
-  let min_key,fee_key;
-  if(wallet.startsWith('USDT')){min_key='min_usdt';fee_key='fee_usdt';}
-  else{const cfg=WALLET_CONFIG[wallet]||WALLET_CONFIG['Vodafone Cash'];min_key=cfg.min_key;fee_key=cfg.fee_key;}
-  const comm  =parseFloat(sett[fee_key]||sett.withdrawal_commission||1);
-  const minW  =parseFloat(sett[min_key]||sett.min_withdraw||5);
+  const fee   =parseFloat(sett[getFeeKey()]??sett.withdrawal_commission??1);
+  const minW  =parseFloat(sett[getMinKey()]??sett.min_withdraw??5);
   if(!number||number.length<3){showToast('أدخل بيانات المحفظة','error');return;}
-  if(!amount||amount<minW){showToast('الحد الأدنى '+fmt(minW)+' ج.م','error');return;}
-  if((amount+comm)>(user.balance||0)){showToast('رصيد غير كافٍ (المبلغ + رسوم '+fmt(comm)+' ج.م)','error');return;}
+  if(isNaN(amount)||amount<=0){showToast('أدخل مبلغ صحيح','error');return;}
+  if(amount<minW){showToast('الحد الأدنى لـ '+wallet+' هو '+fmt(minW)+' ج.م','error');return;}
+  const total=amount+fee;
+  if(total>(user.balance||0)){showToast('رصيد غير كافٍ — تحتاج '+fmt(total)+' ج.م','error');return;}
   const d=await api('/api/withdraw',{amount,wallet_type:wallet,wallet_number:number});
   if(d.success){
-    user.balance=Math.max(0,(user.balance||0)-(amount+comm));
+    user.balance=Math.max(0,(user.balance||0)-total);
     localStorage.setItem('rw_user',JSON.stringify(user));
     renderUI();
     document.getElementById('w-number').value='';
     document.getElementById('w-amount').value='';
-    calcCommission();
+    calcFee();
     showToast('✅ تم إرسال طلب السحب','success');
-    loadWithdrawals();
+    loadWHist();
   } else showToast(d.error||'حدث خطأ','error');
 }
-
-async function loadWithdrawals(){
+async function loadWHist(){
   const d=await api('/api/my_withdrawals',{});
   const el=document.getElementById('w-hist');
   if(!d.withdrawals?.length){el.innerHTML='<div class="empty">لا توجد طلبات بعد</div>';return;}
@@ -721,8 +663,7 @@ async function loadWithdrawals(){
       <div style="font-size:11px;color:var(--muted);margin-top:4px">${w.wallet_number} · ${w.date}</div>
     </div>`).join('');
 }
-
-async function loadTransactions(){
+async function loadTx(){
   const d=await api('/api/transactions',{});
   const el=document.getElementById('tx-list');
   if(!d.transactions?.length){el.innerHTML='<div class="empty">لا توجد عمليات بعد</div>';return;}
@@ -736,9 +677,9 @@ async function loadTransactions(){
     </div>`).join('');
 }
 
-// ══ مساعدات ══════════════════════════════════════════════════
-function copyRef(){navigator.clipboard?.writeText(buildRefLink()).then(()=>showToast('✅ تم نسخ رابط الإحالة','success'));}
-function shareWhatsapp(){window.open('https://wa.me/?text='+encodeURIComponent('انضم وشاهد إعلانات واكسب مكافآت فورية! '+buildRefLink()));}
+// ── مساعدات ──────────────────────────────────────────────────
+function copyRef(){navigator.clipboard?.writeText(refLink()).then(()=>showToast('✅ تم نسخ رابط الإحالة','success'));}
+function shareWhatsapp(){window.open('https://wa.me/?text='+encodeURIComponent('انضم وشاهد إعلانات واكسب مكافآت فورية! '+refLink()));}
 function stL(s){return{pending:'⏳ معلق',approved:'✅ مقبول',rejected:'❌ مرفوض'}[s]||s;}
 function showToast(msg,type='success'){
   const t=document.getElementById('toast');
