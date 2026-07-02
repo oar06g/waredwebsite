@@ -79,8 +79,27 @@ if(localStorage.getItem('rw_token')) location.replace('/dashboard');
 if(tg?.initDataUnsafe?.user){ tg.expand(); loginTelegram(); }
 
 async function post(url,body){
-  const r=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json','ngrok-skip-browser-warning':'true'},body:JSON.stringify(body)});
-  return r.json();
+  try{
+    const controller = new AbortController();
+    const timeout = setTimeout(()=>controller.abort(), 15000); // 15 ثانية حد أقصى
+    const r = await fetch(url,{
+      method:'POST',
+      headers:{'Content-Type':'application/json','ngrok-skip-browser-warning':'true'},
+      body:JSON.stringify(body),
+      signal: controller.signal
+    });
+    clearTimeout(timeout);
+    if(!r.ok){
+      const errData = await r.json().catch(()=>({error:'خطأ غير معروف من السيرفر ('+r.status+')'}));
+      return errData;
+    }
+    return await r.json();
+  } catch(e){
+    if(e.name === 'AbortError'){
+      return {error:'انتهت مهلة الاتصال — تأكد إن السيرفر شغال'};
+    }
+    return {error:'تعذر الاتصال بالسيرفر: ' + e.message};
+  }
 }
 function save(d){
   localStorage.setItem('rw_token',d.token);

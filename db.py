@@ -177,9 +177,18 @@ def transaction_to_dict(t):
 
 # ── SETTINGS ──────────────────────────────────────────────────────────────────
 def get_settings():
+    DEFAULT = {
+        'reward_per_ad':0.5,'min_withdraw':5,'cooldown_seconds':20,
+        'max_ads_per_day':100,'withdrawal_commission':1,'captcha_every':10,
+        'welcome_message':'','welcome_active':False,'active_theme':'dark_gold',
+        'min_vodafone':5,'fee_vodafone':1,'min_etisalat':5,'fee_etisalat':1,
+        'min_orange':5,'fee_orange':1,'min_we':5,'fee_we':1,
+        'min_binance':10,'fee_binance':0.5,'min_ethereum':20,'fee_ethereum':2,
+        'min_usdt':10,'fee_usdt':1,'usdt_networks':'TRC20,ERC20,BEP20','active_usdt_nets':'TRC20,ERC20,BEP20',
+    }
     try:
         r = supabase.table('settings').select('*').limit(1).execute()
-        if r.data:
+        if r.data and len(r.data) > 0:
             s = r.data[0]
             return {
                 'reward_per_ad':         float(s.get('reward_per_ad')         or 0.5),
@@ -208,19 +217,10 @@ def get_settings():
                 'usdt_networks':     s.get('usdt_networks',    'TRC20,ERC20,BEP20'),
                 'active_usdt_nets':  s.get('active_usdt_nets', 'TRC20,ERC20,BEP20'),
             }
-    except: pass
-    default = {
-        'reward_per_ad':0.5,'minimum_withdraw':5,'cooldown_seconds':20,
-        'max_ads_per_day':100,'withdrawal_commission':1,'captcha_every':10,
-        'welcome_message':'','welcome_active':False,'active_theme':'dark_gold',
-        'min_vodafone':5,'fee_vodafone':1,'min_etisalat':5,'fee_etisalat':1,
-        'min_orange':5,'fee_orange':1,'min_we':5,'fee_we':1,
-        'min_binance':10,'fee_binance':0.5,'min_ethereum':20,'fee_ethereum':2,
-        'min_usdt':10,'fee_usdt':1,'usdt_networks':'TRC20,ERC20,BEP20','active_usdt_nets':'TRC20,ERC20,BEP20',
-    }
-    supabase.table('settings').insert(default).execute()
-    default['min_withdraw'] = default.pop('minimum_withdraw')
-    return default
+    except Exception as e:
+        print(f"[get_settings error] {e}")
+    return DEFAULT
+
 
 def update_settings(**kwargs):
     if 'min_withdraw' in kwargs:
@@ -372,3 +372,29 @@ def get_admin_stats():
 def get_top_referrers(limit=50):
     r = supabase.table('users').select('user_id,username,referral_count,total_earned').gt('referral_count',0).order('referral_count',desc=True).limit(limit).execute()
     return r.data or []
+
+
+# ── ADMIN AUTH ────────────────────────────────────────────────────────────────
+def get_admin_password_hash(admin_id):
+    try:
+        r = supabase.table('admin_auth').select('*').eq('admin_id', admin_id).single().execute()
+        return r.data.get('password_hash','') if r.data else ''
+    except: return ''
+
+def set_admin_password(admin_id, password):
+    h = hash_password(password)
+    try:
+        r = supabase.table('admin_auth').select('id').eq('admin_id', admin_id).single().execute()
+        if r.data:
+            supabase.table('admin_auth').update({'password_hash':h,'updated_at':datetime.utcnow().isoformat()}).eq('admin_id',admin_id).execute()
+        else:
+            supabase.table('admin_auth').insert({'admin_id':admin_id,'password_hash':h}).execute()
+    except:
+        supabase.table('admin_auth').insert({'admin_id':admin_id,'password_hash':h}).execute()
+    return True
+
+def verify_admin_password(admin_id, password):
+    h = get_admin_password_hash(admin_id)
+    if not h:
+        return True  # لو معندوش باسورد متسجل، السماح بالـ ID بس (الوضع الافتراضي)
+    return check_password(password, h)

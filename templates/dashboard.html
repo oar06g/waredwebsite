@@ -306,14 +306,25 @@ const WKEYS = {
 // ── API ──────────────────────────────────────────────────────
 async function api(url, body=null){
   try{
+    const controller = new AbortController();
+    const timeout = setTimeout(()=>controller.abort(), 15000);
     const r = await fetch(url,{
       method: body!==null?'POST':'GET',
       headers:{'Content-Type':'application/json','X-Auth-Token':TOKEN,'ngrok-skip-browser-warning':'true'},
-      body: body!==null?JSON.stringify(body):null
+      body: body!==null?JSON.stringify(body):null,
+      signal: controller.signal
     });
+    clearTimeout(timeout);
     if(r.status===401){logout();return{};}
+    if(!r.ok){
+      const errData = await r.json().catch(()=>({error:'خطأ من السيرفر ('+r.status+')'}));
+      return errData;
+    }
     return await r.json();
-  }catch(e){return{error:'خطأ في الاتصال'};}
+  }catch(e){
+    if(e.name==='AbortError') return {error:'انتهت مهلة الاتصال بالسيرفر'};
+    return {error:'تعذر الاتصال: '+e.message};
+  }
 }
 
 // ── INIT ─────────────────────────────────────────────────────

@@ -3,7 +3,6 @@ website/app.py — موقع المستخدم
 Flask + Supabase | PORT 5000
 """
 import sys, os, uuid, secrets, time, json, hmac, hashlib
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'shared'))
 
 from flask import Flask, request, jsonify, render_template
 from dotenv import load_dotenv
@@ -61,6 +60,16 @@ def verify_tg_data(init_data):
     return {}
 
 # ── صفحات ─────────────────────────────────────────────────────────────────────
+@app.route('/api/health')
+def health():
+    """للتأكد إن Supabase متصل صح"""
+    try:
+        from db import supabase
+        r = supabase.table('settings').select('id').limit(1).execute()
+        return jsonify({'status':'ok','supabase':'connected','settings_found':len(r.data or [])>0})
+    except Exception as e:
+        return jsonify({'status':'error','message':str(e)}), 500
+
 @app.route('/')
 def page_home():     return render_template('index.html')
 
@@ -70,30 +79,38 @@ def page_dashboard(): return render_template('dashboard.html')
 # ── مصادقة ────────────────────────────────────────────────────────────────────
 @app.route('/api/register', methods=['POST'])
 def register():
-    d = request.json or {}
-    username = d.get('username','').strip()
-    password = d.get('password','')
-    email    = d.get('email','').strip()
-    ref      = d.get('ref','').strip()
-    if not username or not password:
-        return jsonify({'error':'أدخل اسم المستخدم وكلمة المرور'}), 400
-    if len(password) < 6:
-        return jsonify({'error':'كلمة المرور 6 أحرف على الأقل'}), 400
-    if get_user_by_username(username):
-        return jsonify({'error':'اسم المستخدم موجود بالفعل'}), 400
-    uid  = str(uuid.uuid4())[:8]
-    user = create_user(uid, username, email=email, password=password, referrer_id=ref or None)
-    token = make_token(uid)
-    return jsonify({'success':True,'token':token,'user':user_to_dict(user),'settings':get_settings()})
+    try:
+        d = request.json or {}
+        username = d.get('username','').strip()
+        password = d.get('password','')
+        email    = d.get('email','').strip()
+        ref      = d.get('ref','').strip()
+        if not username or not password:
+            return jsonify({'error':'أدخل اسم المستخدم وكلمة المرور'}), 400
+        if len(password) < 6:
+            return jsonify({'error':'كلمة المرور 6 أحرف على الأقل'}), 400
+        if get_user_by_username(username):
+            return jsonify({'error':'اسم المستخدم موجود بالفعل'}), 400
+        uid  = str(uuid.uuid4())[:8]
+        user = create_user(uid, username, email=email, password=password, referrer_id=ref or None)
+        token = make_token(uid)
+        return jsonify({'success':True,'token':token,'user':user_to_dict(user),'settings':get_settings()})
+    except Exception as e:
+        print(f"[REGISTER ERROR] {e}")
+        return jsonify({'error': f'خطأ في السيرفر: {str(e)}'}), 500
 
 @app.route('/api/login', methods=['POST'])
 def login():
-    d = request.json or {}
-    user = get_user_by_username(d.get('username','').strip())
-    if not user or not check_password(d.get('password',''), user.get('password_hash','')):
-        return jsonify({'error':'اسم المستخدم أو كلمة المرور غلط'}), 401
-    token = make_token(user['user_id'])
-    return jsonify({'success':True,'token':token,'user':user_to_dict(user),'settings':get_settings()})
+    try:
+        d = request.json or {}
+        user = get_user_by_username(d.get('username','').strip())
+        if not user or not check_password(d.get('password',''), user.get('password_hash','')):
+            return jsonify({'error':'اسم المستخدم أو كلمة المرور غلط'}), 401
+        token = make_token(user['user_id'])
+        return jsonify({'success':True,'token':token,'user':user_to_dict(user),'settings':get_settings()})
+    except Exception as e:
+        print(f"[LOGIN ERROR] {e}")
+        return jsonify({'error': f'خطأ في السيرفر: {str(e)}'}), 500
 
 @app.route('/api/tg_auth', methods=['POST'])
 def tg_auth():
